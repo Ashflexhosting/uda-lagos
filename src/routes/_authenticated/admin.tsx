@@ -19,19 +19,20 @@ type MB = Database["public"]["Views"]["member_balances"]["Row"];
 
 function Admin() {
   const { data: acct, isLoading } = useAccount();
-  const [tab, setTab] = useState<"members" | "proofs" | "dues">("members");
+  const [tab, setTab] = useState<"members" | "proofs" | "dues" | "messages">("members");
   if (isLoading) return <Shell title="Admin"><p className="text-muted-foreground">Loading…</p></Shell>;
   if (!acct?.isAdmin) return <Shell title="Admin"><p>You don't have admin access.</p></Shell>;
   return (
     <Shell title="Admin" subtitle="Members, payments and dues">
       <div className="mb-6 flex gap-2">
-        {([["members", "Members"], ["proofs", "Payment proofs"], ["dues", "Yearly dues"]] as const).map(([k, l]) => (
+        {([["members", "Members"], ["proofs", "Payment proofs"], ["dues", "Yearly dues"], ["messages", "Messages"]] as const).map(([k, l]) => (
           <button key={k} onClick={() => setTab(k)} className={tab === k ? btnCls : btn2Cls}>{l}</button>
         ))}
       </div>
       {tab === "members" && <Members />}
       {tab === "proofs" && <Proofs />}
       {tab === "dues" && <Dues />}
+      {tab === "messages" && <Messages />}
     </Shell>
   );
 }
@@ -361,6 +362,34 @@ function Dues() {
           </tbody>
         </table>
       </div>
+    </div>
+  );
+}
+
+function Messages() {
+  const qc = useQueryClient();
+  const { data: msgs = [] } = useQuery({
+    queryKey: ["admin-messages"],
+    queryFn: async () => (await supabase.from("contact_messages").select("*").order("created_at", { ascending: false })).data ?? [],
+  });
+  async function toggle(id: string, handled: boolean) {
+    const { error } = await supabase.from("contact_messages").update({ handled }).eq("id", id);
+    if (error) { toast.error(error.message); return; }
+    qc.invalidateQueries({ queryKey: ["admin-messages"] });
+  }
+  if (!msgs.length) return <p className="text-muted-foreground">No messages yet.</p>;
+  return (
+    <div className="space-y-3">
+      {msgs.map((m) => (
+        <div key={m.id} className={`rounded-lg border border-border bg-card p-5 ${m.handled ? "opacity-60" : ""}`}>
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <p className="font-semibold">{m.name} <span className="text-sm font-normal text-muted-foreground">· {m.email}{m.phone ? ` · ${m.phone}` : ""}</span></p>
+            <span className="text-xs text-muted-foreground">{new Date(m.created_at).toLocaleString("en-NG")}</span>
+          </div>
+          <p className="mt-2 whitespace-pre-wrap text-sm">{m.message}</p>
+          <button onClick={() => toggle(m.id, !m.handled)} className="mt-3 text-sm underline">{m.handled ? "Mark as new" : "Mark as handled"}</button>
+        </div>
+      ))}
     </div>
   );
 }
