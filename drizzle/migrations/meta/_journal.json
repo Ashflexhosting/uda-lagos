@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1793627085524,
+      "tag": "0000_membership_portal",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793627118608,
+      "tag": "0001_align_balances_with_sheet",
+      "breakpoints": true
+    }
+  ]
+}
