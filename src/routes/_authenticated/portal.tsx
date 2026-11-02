@@ -35,7 +35,7 @@ function Portal() {
   );
 }
 
-export function MemberAccount({ memberId }: { memberId: string }) {
+function MemberAccount({ memberId }: { memberId: string }) {
   const { data } = useQuery({
     queryKey: ["member", memberId],
     queryFn: async () => {
