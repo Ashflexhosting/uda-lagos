@@ -15,6 +15,13 @@
       "when": 1793627118608,
       "tag": "0001_align_balances_with_sheet",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793627403733,
+      "tag": "0002_remove_first_signup_admin",
+      "breakpoints": true
     }
   ]
 }
