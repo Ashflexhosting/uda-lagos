@@ -129,7 +129,7 @@ function MemberModal({ m, onClose }: { m?: MB; onClose: () => void }) {
     const { error } = isNew
       ? await supabase.from("members").insert({ ...row, id: normalizeMemberNo(f.id) })
       : await supabase.from("members").update(row).eq("id", m!.id!);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success(isNew ? "Member added" : "Member updated");
     refresh();
     if (isNew) onClose();
@@ -138,7 +138,7 @@ function MemberModal({ m, onClose }: { m?: MB; onClose: () => void }) {
   async function remove() {
     if (!confirm(`Remove ${m!.name}? Their payments will also be deleted.`)) return;
     const { error } = await supabase.from("members").delete().eq("id", m!.id!);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Member removed");
     refresh();
     onClose();
@@ -202,8 +202,8 @@ function RecordPayment({ memberId }: { memberId: string }) {
   async function add(e: FormEvent) {
     e.preventDefault();
     const { data: u } = await supabase.auth.getUser();
-    const { error } = await supabase.from("payments").insert({ member_id: memberId, amount: Number(amount), paid_on: date, note: note || null, recorded_by: u.user?.id });
-    if (error) return toast.error(error.message);
+    const { error } = await supabase.from("payments").insert({ member_id: memberId, amount: Number(amount), paid_on: date, note: note || null, recorded_by: u.user?.id ?? null });
+    if (error) { toast.error(error.message); return; }
     toast.success("Payment recorded");
     setAmount(""); setNote("");
     qc.invalidateQueries();
@@ -211,7 +211,7 @@ function RecordPayment({ memberId }: { memberId: string }) {
   async function del(id: string) {
     if (!confirm("Delete this payment?")) return;
     const { error } = await supabase.from("payments").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries();
   }
 
@@ -278,12 +278,12 @@ function Proofs() {
   });
   async function view(path: string) {
     const { data, error } = await supabase.storage.from("proofs").createSignedUrl(path, 300);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     window.open(data.signedUrl, "_blank");
   }
   async function review(id: string, approve: boolean) {
     const { error } = await supabase.rpc("review_proof", { _proof_id: id, _approve: approve });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success(approve ? "Approved — payment recorded" : "Rejected");
     qc.invalidateQueries();
   }
@@ -322,11 +322,11 @@ function Dues() {
     e.preventDefault();
     const row = { year: Number(f.year), dues: Number(f.dues), welfare: Number(f.welfare), dev_levy: Number(f.dev_levy) };
     const { error } = await supabase.from("dues_settings").upsert({ ...row, updated_at: new Date().toISOString() });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     if (apply) {
       if (!confirm("Set every member's dues and levies to these amounts? Individual adjustments will be overwritten.")) return;
       const { error: e2 } = await supabase.from("members").update({ dues: row.dues, welfare: row.welfare, dev_levy: row.dev_levy }).neq("id", "");
-      if (e2) return toast.error(e2.message);
+      if (e2) { toast.error(e2.message); return; }
     }
     toast.success(apply ? "Saved and applied to all members" : "Saved");
     qc.invalidateQueries();

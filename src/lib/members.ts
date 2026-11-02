@@ -22,7 +22,7 @@ export const statusOf = (b: number): BalanceStatus => (b > 0 ? "owing" : b < 0 ?
 
 export function toCsv(rows: Record<string, unknown>[]) {
   if (!rows.length) return "";
-  const cols = Object.keys(rows[0]);
+  const cols = Object.keys(rows[0]!);
   const esc = (v: unknown) => {
     const s = v == null ? "" : String(v);
     return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;

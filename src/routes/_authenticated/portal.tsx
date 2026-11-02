@@ -111,10 +111,10 @@ function ProofForm({ memberId, proofs }: { memberId: string; proofs: ProofRow[] 
     setBusy(true);
     const path = `${memberId}/${Date.now()}-${file.name.replace(/[^\w.-]/g, "_")}`;
     const up = await supabase.storage.from("proofs").upload(path, file);
-    if (up.error) { setBusy(false); return toast.error(up.error.message); }
+    if (up.error) { setBusy(false); { toast.error(up.error.message); return; } }
     const { error } = await supabase.from("payment_proofs").insert({ member_id: memberId, amount: Number(amount), paid_on: date, note: note || null, file_path: path });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Sent — an officer will confirm it.");
     setAmount(""); setNote(""); setFile(null);
     (e.target as HTMLFormElement).reset();
@@ -166,11 +166,11 @@ function ContactForm({ m }: { m: ContactRow }) {
     if (photo) {
       photo_path = `${m.id}/photo-${Date.now()}`;
       const up = await supabase.storage.from("photos").upload(photo_path, photo, { upsert: true });
-      if (up.error) { setBusy(false); return toast.error(up.error.message); }
+      if (up.error) { setBusy(false); { toast.error(up.error.message); return; } }
     }
-    const { error } = await supabase.rpc("update_my_contact", { _email: f.email || null, _phone: f.phone || null, _address: f.address || null, _photo_path: photo_path });
+    const { error } = await supabase.rpc("update_my_contact", { _email: f.email, _phone: f.phone, _address: f.address, _photo_path: photo_path ?? "" });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Details saved");
     qc.invalidateQueries();
   }
