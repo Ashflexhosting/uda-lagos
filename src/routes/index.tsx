@@ -48,7 +48,7 @@ function Index() {
     <div className="min-h-screen bg-background">
       <header className="border-b border-border bg-primary text-primary-foreground">
         <div className="mx-auto max-w-6xl px-6 py-10">
-          <p className="text-xs uppercase tracking-[0.3em] opacity-70">Umuduru Development Association · Lagos</p>
+          <p className="text-xs uppercase tracking-[0.3em] opacity-70">Uzuakoli Development Association · Lagos Branch</p>
           <h1 className="mt-2 font-serif text-4xl md:text-5xl">Member Financial Status</h1>
           <p className="mt-2 opacity-80">Balances as at 23 October 2026</p>
         </div>
