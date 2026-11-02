@@ -1,47 +1,94 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ASSOCIATION } from "@/lib/members";
+import { SiteLayout } from "@/components/site-layout";
+import hero from "@/assets/hero-gathering.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "UDA Lagos — Member Portal" },
-      { name: "description", content: "Sign in to view your UDA Lagos dues, levies, payments and balance, or manage the association's members." },
-      { property: "og:title", content: "UDA Lagos — Member Portal" },
-      { property: "og:description", content: "Members check balances and statements; officers manage dues and payments." },
+      { title: "UDA Lagos — Uzuakoli Development Association, Lagos Branch" },
+      { name: "description", content: "Uzuakoli Development Association, Lagos Branch: uniting Uzuakoli sons and daughters in Lagos for welfare, development and fellowship." },
+      { property: "og:title", content: "UDA Lagos — Uzuakoli Development Association" },
+      { property: "og:description", content: "Uniting Uzuakoli people in Lagos for welfare, development and fellowship." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: Index,
+  component: Home,
 });
 
-function Index() {
+const pillars = [
+  { t: "Welfare", d: "We stand with members in times of joy and loss — weddings, births, illness and bereavement — through our welfare levy." },
+  { t: "Development", d: "Our development levy funds projects that improve life in Uzuakoli: roads, schools, water and community halls." },
+  { t: "Fellowship", d: "Monthly meetings keep our culture, language and friendships strong for families living in Lagos." },
+];
+
+function Home() {
   return (
-    <div className="min-h-screen bg-background">
-      <header className="bg-primary text-primary-foreground">
-        <div className="mx-auto max-w-5xl px-6 py-20">
-          <p className="text-xs uppercase tracking-[0.3em] opacity-70">{ASSOCIATION}</p>
-          <h1 className="mt-3 max-w-2xl font-serif text-5xl md:text-6xl">Member Portal</h1>
-          <p className="mt-4 max-w-xl text-lg opacity-85">
-            Check your dues and balance, upload payment receipts and download your statement — all in one place.
+    <SiteLayout>
+      <section className="relative isolate overflow-hidden">
+        <img src={hero} alt="Members of the association gathered in conversation" width={1600} height={912} className="absolute inset-0 -z-10 h-full w-full object-cover" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-foreground/85 via-foreground/60 to-foreground/10" />
+        <div className="mx-auto max-w-6xl px-6 py-28 text-background md:py-40">
+          <p className="text-xs uppercase tracking-[0.3em] opacity-80">Lagos Branch · Est. community of Uzuakoli</p>
+          <h1 className="mt-4 max-w-3xl font-serif text-5xl leading-tight md:text-7xl">Together for Uzuakoli, wherever we are.</h1>
+          <p className="mt-6 max-w-xl text-lg opacity-90">
+            We are the sons and daughters of Uzuakoli living in Lagos — supporting one another and building a better home town.
           </p>
-          <Link to="/auth" className="mt-8 inline-block rounded-md bg-background px-6 py-3 font-medium text-foreground">
-            Sign in
-          </Link>
-        </div>
-      </header>
-      <main className="mx-auto grid max-w-5xl gap-6 px-6 py-14 md:grid-cols-3">
-        {[
-          ["Your balance", "See what you've paid in 2026 and what is outstanding, line by line."],
-          ["Send proof of payment", "Upload a bank receipt; an officer confirms it and your balance updates."],
-          ["For officers", "Record payments, manage members, set yearly dues and export statements."],
-        ].map(([t, d]) => (
-          <div key={t} className="rounded-lg border border-border bg-card p-6">
-            <h2 className="font-serif text-xl">{t}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">{d}</p>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <Link to="/auth" className="rounded-md bg-primary px-6 py-3 font-medium text-primary-foreground hover:bg-primary/90">Member sign in</Link>
+            <Link to="/about" className="rounded-md border border-background/60 px-6 py-3 font-medium hover:bg-background/10">About us</Link>
           </div>
-        ))}
-      </main>
-    </div>
+        </div>
+      </section>
+
+      <section className="border-b border-border bg-card">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-6 py-10 text-center md:grid-cols-4">
+          {[["250+", "Registered members"], ["Monthly", "General meetings"], ["3", "Core programmes"], ["24/7", "Online member portal"]].map(([n, l]) => (
+            <div key={l}><p className="font-serif text-3xl text-primary md:text-4xl">{n}</p><p className="mt-1 text-sm text-muted-foreground">{l}</p></div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <p className="text-xs uppercase tracking-[0.3em] text-primary">What we do</p>
+        <h2 className="mt-3 max-w-2xl font-serif text-4xl">Three commitments that hold us together</h2>
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {pillars.map((p, i) => (
+            <div key={p.t} className="rounded-xl border border-border bg-card p-8">
+              <span className="font-serif text-5xl text-primary/25">0{i + 1}</span>
+              <h3 className="mt-4 font-serif text-2xl">{p.t}</h3>
+              <p className="mt-3 text-muted-foreground">{p.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="bg-secondary">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 md:grid-cols-2">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-primary">Member portal</p>
+            <h2 className="mt-3 font-serif text-4xl">Your dues and balance, any time</h2>
+            <p className="mt-4 text-muted-foreground">
+              Sign in with your member number, email or Google to see your statement, upload proof of payment and keep your contact details up to date.
+            </p>
+            <Link to="/auth" className="mt-8 inline-block rounded-md bg-primary px-6 py-3 font-medium text-primary-foreground">Open the portal</Link>
+          </div>
+          <ul className="space-y-4">
+            {["View your balance and full payment history", "Upload bank receipts for confirmation", "Download or print your statement", "Update phone, email, address and photo"].map((t) => (
+              <li key={t} className="flex items-center gap-4 rounded-lg bg-card p-5 shadow-sm">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary text-sm text-primary-foreground">✓</span>
+                <span>{t}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-20 text-center">
+        <h2 className="font-serif text-4xl">From Uzuakoli and living in Lagos?</h2>
+        <p className="mx-auto mt-4 max-w-xl text-muted-foreground">We'd love to welcome you. Get in touch to join the association or attend our next meeting.</p>
+        <Link to="/contact" className="mt-8 inline-block rounded-md bg-primary px-6 py-3 font-medium text-primary-foreground">Contact us</Link>
+      </section>
+    </SiteLayout>
   );
 }
