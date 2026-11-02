@@ -8,3 +8,10 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Architecture rules
+- Balances are computed in the `member_balances` view (brought forward + dues + welfare + dev levy − sum of payments); never store a balance column, so payments stay the single source of truth.
+- Members edit only contact fields via the `update_my_contact` RPC and admins approve proofs via `review_proof`; members have no direct UPDATE policy on `members`, so they can't change their own charges.
+- Member-number logins are auth users with a synthetic email from `memberLoginEmail()` in src/lib/members.ts, created only by the admin server function `setMemberLogin`.
+- The first account to sign up is made admin by the `handle_new_user` trigger; later accounts get only the member role.
+- Uploaded files live in private buckets (`photos`, `proofs`) under a `<member id>/` folder; storage policies key on that folder.
