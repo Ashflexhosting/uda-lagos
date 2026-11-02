@@ -14,16 +14,265 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      dues_settings: {
+        Row: {
+          dev_levy: number
+          dues: number
+          updated_at: string
+          welfare: number
+          year: number
+        }
+        Insert: {
+          dev_levy?: number
+          dues?: number
+          updated_at?: string
+          welfare?: number
+          year: number
+        }
+        Update: {
+          dev_levy?: number
+          dues?: number
+          updated_at?: string
+          welfare?: number
+          year?: number
+        }
+        Relationships: []
+      }
+      members: {
+        Row: {
+          address: string | null
+          created_at: string
+          dev_levy: number
+          dues: number
+          email: string | null
+          id: string
+          name: string
+          opening: number
+          phone: string | null
+          photo_path: string | null
+          user_id: string | null
+          welfare: number
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          dev_levy?: number
+          dues?: number
+          email?: string | null
+          id: string
+          name: string
+          opening?: number
+          phone?: string | null
+          photo_path?: string | null
+          user_id?: string | null
+          welfare?: number
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          dev_levy?: number
+          dues?: number
+          email?: string | null
+          id?: string
+          name?: string
+          opening?: number
+          phone?: string | null
+          photo_path?: string | null
+          user_id?: string | null
+          welfare?: number
+        }
+        Relationships: []
+      }
+      payment_proofs: {
+        Row: {
+          amount: number
+          created_at: string
+          file_path: string
+          id: string
+          member_id: string
+          note: string | null
+          paid_on: string
+          status: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          file_path: string
+          id?: string
+          member_id: string
+          note?: string | null
+          paid_on?: string
+          status?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          file_path?: string
+          id?: string
+          member_id?: string
+          note?: string | null
+          paid_on?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_proofs_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "member_balances"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_proofs_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          member_id: string
+          note: string | null
+          paid_on: string
+          recorded_by: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          member_id: string
+          note?: string | null
+          paid_on?: string
+          recorded_by?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          member_id?: string
+          note?: string | null
+          paid_on?: string
+          recorded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "member_balances"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
-      [_ in never]: never
+      member_balances: {
+        Row: {
+          address: string | null
+          balance: number | null
+          created_at: string | null
+          dev_levy: number | null
+          dues: number | null
+          email: string | null
+          id: string | null
+          name: string | null
+          opening: number | null
+          paid: number | null
+          phone: string | null
+          photo_path: string | null
+          user_id: string | null
+          welfare: number | null
+        }
+        Insert: {
+          address?: string | null
+          balance?: never
+          created_at?: string | null
+          dev_levy?: number | null
+          dues?: number | null
+          email?: string | null
+          id?: string | null
+          name?: string | null
+          opening?: number | null
+          paid?: never
+          phone?: string | null
+          photo_path?: string | null
+          user_id?: string | null
+          welfare?: number | null
+        }
+        Update: {
+          address?: string | null
+          balance?: never
+          created_at?: string | null
+          dev_levy?: number | null
+          dues?: number | null
+          email?: string | null
+          id?: string | null
+          name?: string | null
+          opening?: number | null
+          paid?: never
+          phone?: string | null
+          photo_path?: string | null
+          user_id?: string | null
+          welfare?: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      my_member_id: { Args: never; Returns: string }
+      review_proof: {
+        Args: { _approve: boolean; _proof_id: string }
+        Returns: undefined
+      }
+      update_my_contact: {
+        Args: {
+          _address: string
+          _email: string
+          _phone: string
+          _photo_path: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "member"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +399,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "member"],
+    },
   },
 } as const
