@@ -54,7 +54,7 @@ function Contact() {
             <div><dt className="font-semibold">Phone</dt><dd><a className="text-muted-foreground hover:text-foreground" href="tel:+2348033208027">+234 803 320 8027</a></dd></div>
             <div><dt className="font-semibold">Email</dt><dd><a className="text-muted-foreground hover:text-foreground" href="mailto:info@udalagos.com.ng">info@udalagos.com.ng</a></dd></div>
             <div><dt className="font-semibold">Office</dt><dd className="text-muted-foreground">Spinal Cord Association Center, Ijesha, Lagos (via Lord Chosen)</dd></div>
-            <div><dt className="font-semibold">Meetings</dt><dd className="text-muted-foreground">Monthly general meeting, Lagos</dd></div>
+            <div><dt className="font-semibold">Meetings</dt><dd className="text-muted-foreground">First Sunday of the month, 3pm at Spinal Cord Association Center, Ijesha, Lagos (via Lord Chosen)</dd></div>
             <div><dt className="font-semibold">Already a member?</dt><dd className="text-muted-foreground">Sign in to the member portal to check your balance</dd></div>
           </dl>
         </div>
