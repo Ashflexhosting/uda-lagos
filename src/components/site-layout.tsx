@@ -12,9 +12,9 @@ export function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-2">
           <Link to="/" className="flex items-center gap-3">
-            <img src={emblem.url} alt="Uzuakoli Development Association emblem" width={64} height={64} className="h-16 w-16 shrink-0" />
+            <img src={emblem.url} alt="Uzuakoli Development Association emblem" width={88} height={88} className="h-22 w-22 shrink-0" />
             <span className="leading-tight">
               <span className="block font-serif text-lg">UDA Lagos</span>
               <span className="block text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Uzuakoli Development Association</span>
