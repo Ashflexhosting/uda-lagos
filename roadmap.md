@@ -2,5 +2,5 @@
 - [x] Add a smaller footer emblem.
 - [x] Add a public news/events page and admin publishing controls.
 - [x] Verify public page rendering and privacy policy tests.
-- [ ] Verify admin publishing end-to-end — blocked: no signed-up admin account exists yet.
-- [ ] Check admin account access and Members, Payments and Messages; fix confirmed blockers.
+- [x] Verify admin updates end-to-end — created, read back and deleted a temporary draft.
+- [x] Check admin account access and Members, Payments and Messages; show loading/errors and retry controls instead of misleading empty states.
