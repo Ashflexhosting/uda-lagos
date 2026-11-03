@@ -15,7 +15,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
         <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-2 sm:flex sm:max-w-6xl sm:justify-between sm:gap-4 sm:px-6 sm:mx-auto">
           <Link to="/" className="flex min-w-0 items-center gap-3">
-            <img src={emblem.url} alt="Uzuakoli Development Association emblem" width={88} height={88} className="h-14 w-14 shrink-0 sm:h-22 sm:w-22" />
+            <img src={emblem.url} alt="Uzuakoli Development Association emblem" width={80} height={80} className="h-12 w-12 shrink-0 sm:h-20 sm:w-20" />
             <span className="min-w-0 leading-tight">
               <span className="block truncate font-serif text-base sm:text-lg">UDA Lagos</span>
               <span className="block truncate text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Uzuakoli Development Association</span>
