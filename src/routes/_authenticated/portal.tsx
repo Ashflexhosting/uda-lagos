@@ -8,7 +8,7 @@ import { BalanceBadge, Row, Shell, Stat, btnCls, inputCls } from "@/components/p
 import { naira } from "@/lib/members";
 
 export const Route = createFileRoute("/_authenticated/portal")({
-  head: () => ({ meta: [{ title: "My account — UDA Lagos" }, { name: "description", content: "Your dues, payments and balance." }] }),
+  head: () => ({ meta: [{ title: "My account — UDA Lagos" }, { name: "description", content: "Your dues, payments and balance." }, { property: "og:title", content: "My account — UDA Lagos" }, { property: "og:description", content: "Your membership account and payment history." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
   component: Portal,
 });
 
