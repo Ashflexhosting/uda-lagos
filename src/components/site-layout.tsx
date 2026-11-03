@@ -52,8 +52,13 @@ export function SiteLayout({ children }: { children: ReactNode }) {
             </ul>
           </div>
           <div className="text-sm">
-            <p className="font-semibold">Meetings</p>
-            <p className="mt-3 opacity-80">Monthly general meeting · Lagos</p>
+            <p className="font-semibold">Contact</p>
+            <ul className="mt-3 space-y-2 opacity-80">
+              <li><a className="hover:underline" href="tel:+2348033208027">+234 803 320 8027</a></li>
+              <li><a className="hover:underline" href="mailto:info@udalagos.com.ng">info@udalagos.com.ng</a></li>
+              <li>Spinal Cord Association Center, Ijesha, Lagos (via Lord Chosen)</li>
+              <li>Monthly general meeting · Lagos</li>
+            </ul>
             <p className="mt-6 text-xs opacity-60">© {2026} UDA Lagos Branch</p>
           </div>
         </div>
