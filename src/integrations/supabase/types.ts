@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      association_updates: {
+        Row: {
+          body: string
+          created_at: string
+          event_date: string | null
+          id: string
+          kind: string
+          location: string | null
+          published: boolean
+          title: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          event_date?: string | null
+          id?: string
+          kind?: string
+          location?: string | null
+          published?: boolean
+          title: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          event_date?: string | null
+          id?: string
+          kind?: string
+          location?: string | null
+          published?: boolean
+          title?: string
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string
