@@ -62,6 +62,10 @@ function About() {
             </div>
           ))}
         </div>
+        <div className="mt-10 rounded-xl border border-border bg-card p-6 shadow-sm">
+          <h3 className="font-serif text-xl">How to pay</h3>
+          <BankAccounts className="mt-3" />
+        </div>
         <div className="mt-14 flex flex-wrap gap-3">
           <Link to="/contact" className="rounded-md bg-primary px-6 py-3 font-medium text-primary-foreground">Join the association</Link>
           <Link to="/auth" className="rounded-md border border-input px-6 py-3 font-medium hover:bg-accent">Member sign in</Link>

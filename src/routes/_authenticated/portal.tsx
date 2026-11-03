@@ -124,6 +124,7 @@ function ProofForm({ memberId, proofs }: { memberId: string; proofs: ProofRow[] 
   return (
     <section className="rounded-lg border border-border bg-card p-6">
       <h2 className="font-serif text-xl">Upload proof of payment</h2>
+      <BankAccounts className="mt-3 rounded-md border border-border bg-background p-4" />
       <form onSubmit={submit} className="mt-4 grid grid-cols-2 gap-3">
         <input required type="number" min={1} value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Amount (₦)" className={inputCls} />
         <input required type="date" value={date} onChange={(e) => setDate(e.target.value)} className={inputCls} />

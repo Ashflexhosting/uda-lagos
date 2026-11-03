@@ -1,7 +1,10 @@
 export const ASSOCIATION = "Uzuakoli Development Association · Lagos Branch";
 
-/** Member-number logins use a private, non-deliverable email under this domain. */
-export const MEMBER_EMAIL_DOMAIN = "members.udalagos.app";
+/** Association bank accounts where members pay dues and levies. */
+export const BANK_ACCOUNTS = [
+  { label: "Operations Account", bank: "First Bank", number: "3003829209", name: "Uzuakoli Development Association, Lagos Branch" },
+  { label: "Project Account", bank: "Access Bank", number: "0015636429", name: "Uzuakoli Development Association" },
+] as const;
 
 export function normalizeMemberNo(raw: string) {
   return raw.trim().toUpperCase().replace(/\s+/g, "");
