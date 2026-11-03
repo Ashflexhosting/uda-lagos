@@ -1,0 +1,4 @@
+- [ ] Verify the phone header stays on one line.
+- [ ] Add a smaller footer emblem.
+- [ ] Add a public news/events page and admin publishing controls.
+- [ ] Verify news/event management and public visibility.
