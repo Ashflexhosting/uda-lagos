@@ -10,6 +10,7 @@ import { BalanceBadge, Modal, Shell, Stat, btn2Cls, btnCls, inputCls } from "@/c
 import { downloadFile, naira, statusOf, toCsv, normalizeMemberNo } from "@/lib/members";
 import { setMemberLogin } from "@/lib/admin.functions";
 import { AdminUpdates } from "@/components/admin-updates";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ title: "Admin — UDA Lagos" }, { name: "description", content: "Manage members, payments, dues and association updates." }, { property: "og:title", content: "Admin — UDA Lagos" }, { property: "og:description", content: "Association administration portal." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
@@ -19,15 +20,16 @@ export const Route = createFileRoute("/_authenticated/admin")({
 type MB = Database["public"]["Views"]["member_balances"]["Row"];
 
 function Admin() {
-  const { data: acct, isLoading } = useAccount();
+  const { data: acct, isLoading, error, refetch } = useAccount();
   const [tab, setTab] = useState<"members" | "proofs" | "dues" | "messages" | "updates">("members");
   if (isLoading) return <Shell title="Admin"><p className="text-muted-foreground">Loading…</p></Shell>;
+  if (error) return <Shell title="Admin"><LoadError retry={() => void refetch()} /></Shell>;
   if (!acct?.isAdmin) return <Shell title="Admin"><p>You don't have admin access.</p></Shell>;
   return (
     <Shell title="Admin" subtitle="Members, payments and dues">
       <div className="mb-6 flex flex-wrap gap-2">
         {([["members", "Members"], ["proofs", "Payment proofs"], ["dues", "Yearly dues"], ["messages", "Messages"], ["updates", "News & Events"]] as const).map(([k, l]) => (
-          <button key={k} onClick={() => setTab(k)} className={tab === k ? btnCls : btn2Cls}>{l}</button>
+          <Button key={k} onClick={() => setTab(k)} variant={tab === k ? "default" : "outline"}>{l}</Button>
         ))}
       </div>
       {tab === "members" && <Members />}
@@ -37,6 +39,10 @@ function Admin() {
       {tab === "updates" && <AdminUpdates />}
     </Shell>
   );
+}
+
+function LoadError({ retry }: { retry: () => void }) {
+  return <div role="alert" className="space-y-3 py-4"><p className="text-destructive">Unable to load this information. Please try again.</p><Button variant="outline" onClick={retry}>Try again</Button></div>;
 }
 
 function useMembers() {
@@ -51,7 +57,7 @@ function useMembers() {
 }
 
 function Members() {
-  const { data: members = [] } = useMembers();
+  const { data: members = [], isPending, error, refetch } = useMembers();
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<"all" | "owing" | "credit" | "clear">("all");
   const [sel, setSel] = useState<MB | null>(null);
@@ -79,6 +85,8 @@ function Members() {
     downloadFile(`uda-lagos-statements-${new Date().toISOString().slice(0, 10)}.csv`, toCsv(rows));
   }
 
+  if (isPending) return <p className="text-muted-foreground">Loading members…</p>;
+  if (error) return <LoadError retry={() => void refetch()} />;
   return (
     <>
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -131,7 +139,7 @@ function MemberModal({ m, onClose }: { m?: MB; onClose: () => void }) {
     };
     const { error } = isNew
       ? await supabase.from("members").insert({ ...row, id: normalizeMemberNo(f.id) })
-      : await supabase.from("members").update(row).eq("id", m!.id!);
+      : await supabase.from("members").update(row).eq("id", m?.id ?? "");
     if (error) { toast.error(error.message); return; }
     toast.success(isNew ? "Member added" : "Member updated");
     refresh();
@@ -139,8 +147,9 @@ function MemberModal({ m, onClose }: { m?: MB; onClose: () => void }) {
   }
 
   async function remove() {
-    if (!confirm(`Remove ${m!.name}? Their payments will also be deleted.`)) return;
-    const { error } = await supabase.from("members").delete().eq("id", m!.id!);
+    if (!m?.id) return;
+    if (!confirm(`Remove ${m.name}? Their payments will also be deleted.`)) return;
+    const { error } = await supabase.from("members").delete().eq("id", m.id);
     if (error) { toast.error(error.message); return; }
     toast.success("Member removed");
     refresh();
@@ -159,10 +168,10 @@ function MemberModal({ m, onClose }: { m?: MB; onClose: () => void }) {
     <Modal onClose={onClose}>
       <div className="flex items-start justify-between">
         <div>
-          {!isNew && <p className="font-mono text-xs text-muted-foreground">{m!.id}</p>}
-          <h2 className="font-serif text-2xl">{isNew ? "Add member" : m!.name}</h2>
+          {m && <p className="font-mono text-xs text-muted-foreground">{m.id}</p>}
+          <h2 className="font-serif text-2xl">{isNew ? "Add member" : m?.name}</h2>
         </div>
-        {!isNew && <BalanceBadge b={Number(m!.balance)} />}
+        {m && <BalanceBadge b={Number(m.balance)} />}
       </div>
       <form onSubmit={save} className="mt-4 grid grid-cols-2 gap-3">
         {isNew && field("id", "Member number")}
@@ -182,10 +191,10 @@ function MemberModal({ m, onClose }: { m?: MB; onClose: () => void }) {
           </div>
         </div>
       </form>
-      {!isNew && (
+      {m?.id && (
         <>
-          <RecordPayment memberId={m!.id!} />
-          <LoginSetup memberId={m!.id!} hasLogin={!!m!.user_id} />
+          <RecordPayment memberId={m.id} />
+          <LoginSetup memberId={m.id} hasLogin={!!m.user_id} />
         </>
       )}
     </Modal>
@@ -194,9 +203,13 @@ function MemberModal({ m, onClose }: { m?: MB; onClose: () => void }) {
 
 function RecordPayment({ memberId }: { memberId: string }) {
   const qc = useQueryClient();
-  const { data: payments = [] } = useQuery({
+  const { data: payments = [], isPending, error, refetch } = useQuery({
     queryKey: ["member-payments", memberId],
-    queryFn: async () => (await supabase.from("payments").select("*").eq("member_id", memberId).order("paid_on", { ascending: false })).data ?? [],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("payments").select("*").eq("member_id", memberId).order("paid_on", { ascending: false });
+      if (error) throw error;
+      return data ?? [];
+    },
   });
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
@@ -227,6 +240,9 @@ function RecordPayment({ memberId }: { memberId: string }) {
         <button className={btnCls}>Add</button>
         <input value={note} onChange={(e) => setNote(e.target.value)} placeholder="Note (optional)" className={`${inputCls} col-span-3`} />
       </form>
+      {isPending && <p className="mt-3 text-sm text-muted-foreground">Loading payments…</p>}
+      {error && <LoadError retry={() => void refetch()} />}
+      {!isPending && !error && !payments.length && <p className="mt-3 text-sm text-muted-foreground">No payments recorded yet.</p>}
       <ul className="mt-3 max-h-40 divide-y divide-border overflow-y-auto text-sm">
         {payments.map((p) => (
           <li key={p.id} className="flex items-center justify-between gap-2 py-2">
@@ -275,9 +291,13 @@ function LoginSetup({ memberId, hasLogin }: { memberId: string; hasLogin: boolea
 
 function Proofs() {
   const qc = useQueryClient();
-  const { data: proofs = [] } = useQuery({
+  const { data: proofs = [], isPending, error, refetch } = useQuery({
     queryKey: ["admin-proofs"],
-    queryFn: async () => (await supabase.from("payment_proofs").select("*, members(name)").order("created_at", { ascending: false })).data ?? [],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("payment_proofs").select("*, members(name)").order("created_at", { ascending: false });
+      if (error) throw error;
+      return data ?? [];
+    },
   });
   async function view(path: string) {
     const { data, error } = await supabase.storage.from("proofs").createSignedUrl(path, 300);
@@ -290,6 +310,8 @@ function Proofs() {
     toast.success(approve ? "Approved — payment recorded" : "Rejected");
     qc.invalidateQueries();
   }
+  if (isPending) return <p className="text-muted-foreground">Loading payment proofs…</p>;
+  if (error) return <LoadError retry={() => void refetch()} />;
   if (!proofs.length) return <p className="text-muted-foreground">No payment proofs submitted yet.</p>;
   return (
     <div className="overflow-hidden rounded-lg border border-border bg-card">
@@ -370,15 +392,21 @@ function Dues() {
 
 function Messages() {
   const qc = useQueryClient();
-  const { data: msgs = [] } = useQuery({
+  const { data: msgs = [], isPending, error, refetch } = useQuery({
     queryKey: ["admin-messages"],
-    queryFn: async () => (await supabase.from("contact_messages").select("*").order("created_at", { ascending: false })).data ?? [],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("contact_messages").select("*").order("created_at", { ascending: false });
+      if (error) throw error;
+      return data ?? [];
+    },
   });
   async function toggle(id: string, handled: boolean) {
     const { error } = await supabase.from("contact_messages").update({ handled }).eq("id", id);
     if (error) { toast.error(error.message); return; }
     qc.invalidateQueries({ queryKey: ["admin-messages"] });
   }
+  if (isPending) return <p className="text-muted-foreground">Loading messages…</p>;
+  if (error) return <LoadError retry={() => void refetch()} />;
   if (!msgs.length) return <p className="text-muted-foreground">No messages yet.</p>;
   return (
     <div className="space-y-3">
