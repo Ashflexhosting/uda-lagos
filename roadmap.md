@@ -3,3 +3,4 @@
 - [x] Add a public news/events page and admin publishing controls.
 - [x] Verify public page rendering and privacy policy tests.
 - [ ] Verify admin publishing end-to-end — blocked: no signed-up admin account exists yet.
+- [ ] Check admin account access and Members, Payments and Messages; fix confirmed blockers.
