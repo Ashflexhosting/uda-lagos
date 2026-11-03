@@ -38,13 +38,8 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <footer className="bg-primary text-primary-foreground">
         <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 md:grid-cols-3">
           <div>
-            <div className="flex items-center gap-3">
-              <img src={emblem.url} alt="Uzuakoli Development Association emblem" width={40} height={40} className="h-10 w-10 shrink-0" />
-              <div>
-                <p className="font-serif text-xl">Uzuakoli Development Association</p>
-                <p className="text-sm opacity-75">Lagos Branch</p>
-              </div>
-            </div>
+            <p className="font-serif text-xl">Uzuakoli Development Association</p>
+            <p className="mt-1 text-sm opacity-75">Lagos Branch</p>
             <p className="mt-4 text-sm opacity-75">Sons and daughters of Uzuakoli in Lagos, working together for our people at home and here.</p>
           </div>
           <div className="text-sm">
