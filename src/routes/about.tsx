@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site-layout";
+import { BankAccounts } from "@/components/bank-accounts";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -61,6 +62,10 @@ function About() {
               <p className="mt-2 text-sm text-muted-foreground">{d}</p>
             </div>
           ))}
+        </div>
+        <div className="mt-10 rounded-xl border border-border bg-card p-6 shadow-sm">
+          <h3 className="font-serif text-xl">How to pay</h3>
+          <BankAccounts className="mt-3" />
         </div>
         <div className="mt-14 flex flex-wrap gap-3">
           <Link to="/contact" className="rounded-md bg-primary px-6 py-3 font-medium text-primary-foreground">Join the association</Link>
