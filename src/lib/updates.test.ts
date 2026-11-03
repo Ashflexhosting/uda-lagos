@@ -1,5 +1,4 @@
 // Transactional policy checks against the configured database; no rows are retained.
-// @vitest-environment node
 import { execFileSync } from "node:child_process";
 import { describe, expect, it } from "vitest";
 
