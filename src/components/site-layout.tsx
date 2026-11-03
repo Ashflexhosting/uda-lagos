@@ -12,12 +12,12 @@ export function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-2">
-          <Link to="/" className="flex items-center gap-3">
-            <img src={emblem.url} alt="Uzuakoli Development Association emblem" width={88} height={88} className="h-22 w-22 shrink-0" />
-            <span className="leading-tight">
-              <span className="block font-serif text-lg">UDA Lagos</span>
-              <span className="block text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Uzuakoli Development Association</span>
+        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-2 sm:flex sm:max-w-6xl sm:justify-between sm:gap-4 sm:px-6 sm:mx-auto">
+          <Link to="/" className="flex min-w-0 items-center gap-3">
+            <img src={emblem.url} alt="Uzuakoli Development Association emblem" width={88} height={88} className="h-14 w-14 shrink-0 sm:h-22 sm:w-22" />
+            <span className="min-w-0 leading-tight">
+              <span className="block truncate font-serif text-base sm:text-lg">UDA Lagos</span>
+              <span className="block truncate text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Uzuakoli Development Association</span>
             </span>
           </Link>
           <nav className="flex items-center gap-1 text-sm">
@@ -38,8 +38,13 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <footer className="bg-primary text-primary-foreground">
         <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 md:grid-cols-3">
           <div>
-            <p className="font-serif text-xl">Uzuakoli Development Association</p>
-            <p className="mt-1 text-sm opacity-75">Lagos Branch</p>
+            <div className="flex items-center gap-3">
+              <img src={emblem.url} alt="Uzuakoli Development Association emblem" width={40} height={40} className="h-10 w-10 shrink-0" />
+              <div>
+                <p className="font-serif text-xl">Uzuakoli Development Association</p>
+                <p className="text-sm opacity-75">Lagos Branch</p>
+              </div>
+            </div>
             <p className="mt-4 text-sm opacity-75">Sons and daughters of Uzuakoli in Lagos, working together for our people at home and here.</p>
           </div>
           <div className="text-sm">
