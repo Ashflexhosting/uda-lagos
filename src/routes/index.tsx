@@ -27,7 +27,7 @@ function Home() {
     <SiteLayout>
       <section className="relative isolate overflow-hidden">
         <img src={hero} alt="Members of the association gathered in conversation" width={1600} height={912} className="absolute inset-0 -z-10 h-full w-full object-cover" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-primary/90 via-foreground/60 to-foreground/10" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-foreground/85 via-foreground/60 to-foreground/10" />
         <div className="mx-auto max-w-6xl px-6 py-28 text-background md:py-40">
           <p className="text-xs uppercase tracking-[0.3em] opacity-80">Lagos Branch · Est. community of Uzuakoli</p>
           <h1 className="mt-4 max-w-3xl font-serif text-5xl leading-tight md:text-7xl">Together for Uzuakoli, wherever we are.</h1>
@@ -50,7 +50,7 @@ function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-20">
-        <p className="text-xs uppercase tracking-[0.3em] text-brand">What we do</p>
+        <p className="text-xs uppercase tracking-[0.3em] text-primary">What we do</p>
         <h2 className="mt-3 max-w-2xl font-serif text-4xl">Three commitments that hold us together</h2>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {pillars.map((p, i) => (
@@ -66,7 +66,7 @@ function Home() {
       <section className="bg-secondary">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 md:grid-cols-2">
           <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-brand">Member portal</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-primary">Member portal</p>
             <h2 className="mt-3 font-serif text-4xl">Your dues and balance, any time</h2>
             <p className="mt-4 text-muted-foreground">
               Sign in with your member number, email or Google to see your statement, upload proof of payment and keep your contact details up to date.
