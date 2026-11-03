@@ -1,0 +1,5 @@
+- [x] Verify the phone header stays on one line.
+- [x] Add a smaller footer emblem.
+- [x] Add a public news/events page and admin publishing controls.
+- [x] Verify public page rendering and privacy policy tests.
+- [ ] Verify admin publishing end-to-end — blocked: no signed-up admin account exists yet.

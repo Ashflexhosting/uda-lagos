@@ -9,9 +9,10 @@ import { useAccount } from "@/hooks/use-account";
 import { BalanceBadge, Modal, Shell, Stat, btn2Cls, btnCls, inputCls } from "@/components/portal-ui";
 import { downloadFile, naira, statusOf, toCsv, normalizeMemberNo } from "@/lib/members";
 import { setMemberLogin } from "@/lib/admin.functions";
+import { AdminUpdates } from "@/components/admin-updates";
 
 export const Route = createFileRoute("/_authenticated/admin")({
-  head: () => ({ meta: [{ title: "Admin — UDA Lagos" }, { name: "description", content: "Manage members, payments and dues." }] }),
+  head: () => ({ meta: [{ title: "Admin — UDA Lagos" }, { name: "description", content: "Manage members, payments, dues and association updates." }, { property: "og:title", content: "Admin — UDA Lagos" }, { property: "og:description", content: "Association administration portal." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
   component: Admin,
 });
 
@@ -19,13 +20,13 @@ type MB = Database["public"]["Views"]["member_balances"]["Row"];
 
 function Admin() {
   const { data: acct, isLoading } = useAccount();
-  const [tab, setTab] = useState<"members" | "proofs" | "dues" | "messages">("members");
+  const [tab, setTab] = useState<"members" | "proofs" | "dues" | "messages" | "updates">("members");
   if (isLoading) return <Shell title="Admin"><p className="text-muted-foreground">Loading…</p></Shell>;
   if (!acct?.isAdmin) return <Shell title="Admin"><p>You don't have admin access.</p></Shell>;
   return (
     <Shell title="Admin" subtitle="Members, payments and dues">
-      <div className="mb-6 flex gap-2">
-        {([["members", "Members"], ["proofs", "Payment proofs"], ["dues", "Yearly dues"], ["messages", "Messages"]] as const).map(([k, l]) => (
+      <div className="mb-6 flex flex-wrap gap-2">
+        {([["members", "Members"], ["proofs", "Payment proofs"], ["dues", "Yearly dues"], ["messages", "Messages"], ["updates", "News & Events"]] as const).map(([k, l]) => (
           <button key={k} onClick={() => setTab(k)} className={tab === k ? btnCls : btn2Cls}>{l}</button>
         ))}
       </div>
@@ -33,6 +34,7 @@ function Admin() {
       {tab === "proofs" && <Proofs />}
       {tab === "dues" && <Dues />}
       {tab === "messages" && <Messages />}
+      {tab === "updates" && <AdminUpdates />}
     </Shell>
   );
 }
