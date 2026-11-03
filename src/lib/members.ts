@@ -6,6 +6,9 @@ export const BANK_ACCOUNTS = [
   { label: "Project Account", bank: "Access Bank", number: "0015636429", name: "Uzuakoli Development Association" },
 ] as const;
 
+/** Member-number logins use a private, non-deliverable email under this domain. */
+export const MEMBER_EMAIL_DOMAIN = "members.udalagos.app";
+
 export function normalizeMemberNo(raw: string) {
   return raw.trim().toUpperCase().replace(/\s+/g, "");
 }
