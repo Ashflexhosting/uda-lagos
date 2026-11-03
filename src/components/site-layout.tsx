@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
+import emblem from "@/assets/uda-emblem.png.asset.json";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -13,7 +14,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
           <Link to="/" className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-full bg-primary font-serif text-lg text-primary-foreground">U</span>
+            <img src={emblem.url} alt="Uzuakoli Development Association emblem" width={44} height={44} className="h-11 w-11 shrink-0" />
             <span className="leading-tight">
               <span className="block font-serif text-lg">UDA Lagos</span>
               <span className="block text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Uzuakoli Development Association</span>
