@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAccount } from "@/hooks/use-account";
 import { BalanceBadge, Row, Shell, Stat, btnCls, inputCls } from "@/components/portal-ui";
+import { BankAccounts } from "@/components/bank-accounts";
 import { naira } from "@/lib/members";
 
 export const Route = createFileRoute("/_authenticated/portal")({
