@@ -10,6 +10,7 @@ import { BalanceBadge, Modal, Shell, Stat, btn2Cls, btnCls, inputCls } from "@/c
 import { downloadFile, naira, statusOf, toCsv, normalizeMemberNo } from "@/lib/members";
 import { setMemberLogin } from "@/lib/admin.functions";
 import { AdminUpdates } from "@/components/admin-updates";
+import { AdminSubscribers } from "@/components/admin-subscribers";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/admin")({
@@ -21,14 +22,14 @@ type MB = Database["public"]["Views"]["member_balances"]["Row"];
 
 function Admin() {
   const { data: acct, isLoading, error, refetch } = useAccount();
-  const [tab, setTab] = useState<"members" | "proofs" | "dues" | "messages" | "updates">("members");
+  const [tab, setTab] = useState<"members" | "proofs" | "dues" | "messages" | "updates" | "subscribers">("members");
   if (isLoading) return <Shell title="Admin"><p className="text-muted-foreground">Loading…</p></Shell>;
   if (error) return <Shell title="Admin"><LoadError retry={() => void refetch()} /></Shell>;
   if (!acct?.isAdmin) return <Shell title="Admin"><p>You don't have admin access.</p></Shell>;
   return (
     <Shell title="Admin" subtitle="Members, payments and dues">
       <div className="mb-6 flex flex-wrap gap-2">
-        {([["members", "Members"], ["proofs", "Payment proofs"], ["dues", "Yearly dues"], ["messages", "Messages"], ["updates", "News & Events"]] as const).map(([k, l]) => (
+        {([["members", "Members"], ["proofs", "Payment proofs"], ["dues", "Yearly dues"], ["messages", "Messages"], ["updates", "News & Events"], ["subscribers", "Subscribers"]] as const).map(([k, l]) => (
           <Button key={k} onClick={() => setTab(k)} variant={tab === k ? "default" : "outline"}>{l}</Button>
         ))}
       </div>
@@ -37,6 +38,7 @@ function Admin() {
       {tab === "dues" && <Dues />}
       {tab === "messages" && <Messages />}
       {tab === "updates" && <AdminUpdates />}
+      {tab === "subscribers" && <AdminSubscribers />}
     </Shell>
   );
 }

@@ -3,6 +3,7 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { CalendarDays, MapPin, Newspaper } from "lucide-react";
 import { useState } from "react";
 import { SiteLayout } from "@/components/site-layout";
+import { NewsletterSignup } from "@/components/newsletter-signup";
 import { Button } from "@/components/ui/button";
 import { listPublishedUpdates } from "@/lib/updates.functions";
 
@@ -37,5 +38,6 @@ function News() {
         <p className="max-w-3xl whitespace-pre-wrap break-words leading-relaxed text-muted-foreground">{item.body}</p>
       </article>)}</div>
     </section>
+    <NewsletterSignup />
   </SiteLayout>;
 }
