@@ -45,6 +45,7 @@
   --color-border: var(--border);
   --color-success: var(--success);
   --font-serif: Georgia, 'Times New Roman', serif;
+  --color-gold: oklch(0.82 0.15 82);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
