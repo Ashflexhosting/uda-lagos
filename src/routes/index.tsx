@@ -44,14 +44,6 @@ function Home() {
         </div>
       </section>
 
-      <section className="border-b border-border bg-card">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-6 py-10 text-center md:grid-cols-4">
-          {[["250+", "Registered members"], ["Monthly", "General meetings"], ["3", "Core programmes"], ["24/7", "Online member portal"]].map(([n, l]) => (
-            <div key={l}><p className="font-serif text-3xl text-primary md:text-4xl">{n}</p><p className="mt-1 text-sm text-muted-foreground">{l}</p></div>
-          ))}
-        </div>
-      </section>
-
       <section className="mx-auto max-w-6xl px-6 py-20">
         <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">What we do</p>
         <h2 className="mt-3 max-w-2xl font-serif text-4xl">Three commitments that hold us together</h2>
