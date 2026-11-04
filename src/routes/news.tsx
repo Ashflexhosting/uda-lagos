@@ -38,5 +38,6 @@ function News() {
         <p className="max-w-3xl whitespace-pre-wrap break-words leading-relaxed text-muted-foreground">{item.body}</p>
       </article>)}</div>
     </section>
+    <NewsletterSignup />
   </SiteLayout>;
 }
