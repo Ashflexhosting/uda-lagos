@@ -1,6 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site-layout";
 import hero from "@/assets/hero-gathering.jpg";
+import pillarWelfare from "@/assets/pillar-welfare.jpg";
+import pillarDevelopment from "@/assets/pillar-development.jpg";
+import pillarFellowship from "@/assets/pillar-fellowship.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -17,9 +20,9 @@ export const Route = createFileRoute("/")({
 });
 
 const pillars = [
-  { t: "Welfare", d: "We stand with members in times of joy and loss — weddings, births, illness and bereavement — through our welfare levy." },
-  { t: "Development", d: "Our development levy funds projects that improve life in Uzuakoli: roads, schools, water and community halls." },
-  { t: "Fellowship", d: "Monthly meetings keep our culture, language and friendships strong for families living in Lagos." },
+  { t: "Welfare", d: "We stand with members in times of joy and loss — weddings, births, illness and bereavement — through our welfare levy.", img: pillarWelfare, alt: "Association members comforting and supporting a family" },
+  { t: "Development", d: "Our development levy funds projects that improve life in Uzuakoli: roads, schools, water and community halls.", img: pillarDevelopment, alt: "Community members building a water project in Uzuakoli" },
+  { t: "Fellowship", d: "Monthly meetings keep our culture, language and friendships strong for families living in Lagos.", img: pillarFellowship, alt: "Members seated in a circle at a monthly meeting" },
 ];
 
 function Home() {
