@@ -133,7 +133,7 @@ function AuthPage() {
               {mode === "signup" ? "New member" : mode === "forgot" ? "Account recovery" : "Member access"}
             </p>
             <h1 className="mt-3 text-4xl font-bold tracking-tight">
-              {mode === "signup" ? "Join the association" : mode === "forgot" ? "Reset password" : "Welcome back"}
+              {mode === "signup" ? "Join the association" : mode === "forgot" ? "Reset password" : "CHO CHO CHO OZU NMA!!!"}
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
               {mode === "signup" ? "Only for people not yet on the register." : mode === "forgot" ? "We'll email you a link to set a new password." : mode === "member" ? "Already on the register? Use your membership number." : "Sign in to your UDA Lagos account."}
