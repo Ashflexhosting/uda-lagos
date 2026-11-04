@@ -56,12 +56,11 @@ function Home() {
         <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">What we do</p>
         <h2 className="mt-3 max-w-2xl font-serif text-4xl">Three commitments that hold us together</h2>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {pillars.map((p, i) => (
+          {pillars.map((p) => (
             <div key={p.t} className="overflow-hidden rounded-xl border border-border bg-card">
               <img src={p.img} alt={p.alt} width={1024} height={768} loading="lazy" className="aspect-[4/3] w-full object-cover" />
               <div className="p-8">
-                <span className="font-serif text-5xl text-primary/25">0{i + 1}</span>
-                <h3 className="mt-4 font-serif text-2xl">{p.t}</h3>
+                <h3 className="font-serif text-2xl">{p.t}</h3>
                 <p className="mt-3 text-muted-foreground">{p.d}</p>
               </div>
             </div>
