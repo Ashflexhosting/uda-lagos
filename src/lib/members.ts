@@ -17,6 +17,18 @@ export function memberLoginEmail(memberNo: string) {
   return `${normalizeMemberNo(memberNo).toLowerCase()}@${MEMBER_EMAIL_DOMAIN}`;
 }
 
+/** Normalise Nigerian phone numbers: 0803… and +234803… become 234803… */
+export function normalizePhone(raw: string) {
+  let d = String(raw ?? "").replace(/\D/g, "");
+  if (d.startsWith("0")) d = "234" + d.slice(1);
+  return d;
+}
+
+/** Phone-number logins use a private, non-deliverable email under this domain. */
+export function phoneLoginEmail(phone: string) {
+  return `phone-${normalizePhone(phone)}@phones.udalagos.app`;
+}
+
 export function computeBalance(m: { opening: number; dues: number; welfare: number; dev_levy: number }, paid: number) {
   return Number(m.opening) + Number(m.dues) + Number(m.welfare) + Number(m.dev_levy) - paid;
 }

@@ -21,3 +21,11 @@ describe("member rules", () => {
     ]);
   });
 });
+
+import { normalizePhone, phoneLoginEmail } from "./members";
+describe("phone sign-up", () => {
+  it("local and international forms of a phone number are the same account", () => {
+    expect(normalizePhone("0803 320 8027")).toBe("2348033208027");
+    expect(phoneLoginEmail("+234 803 320 8027")).toBe(phoneLoginEmail("08033208027"));
+  });
+});
