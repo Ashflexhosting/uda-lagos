@@ -29,8 +29,11 @@ export function AdminSubscribers() {
 
   function exportCsv() {
     const csv = toCsv(
-      ["Name", "Email", "Signed up"],
-      subscribers.map((s) => [s.name ?? "", s.email, new Date(s.created_at).toLocaleDateString("en-GB")]),
+      subscribers.map((s) => ({
+        Name: s.name ?? "",
+        Email: s.email,
+        "Signed up": new Date(s.created_at).toLocaleDateString("en-GB"),
+      })),
     );
     downloadFile("newsletter-subscribers.csv", csv);
   }

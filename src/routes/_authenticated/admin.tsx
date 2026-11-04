@@ -10,6 +10,7 @@ import { BalanceBadge, Modal, Shell, Stat, btn2Cls, btnCls, inputCls } from "@/c
 import { downloadFile, naira, statusOf, toCsv, normalizeMemberNo } from "@/lib/members";
 import { setMemberLogin } from "@/lib/admin.functions";
 import { AdminUpdates } from "@/components/admin-updates";
+import { AdminSubscribers } from "@/components/admin-subscribers";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/admin")({
