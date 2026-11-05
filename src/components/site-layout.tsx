@@ -18,7 +18,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
           <p className="sm:hidden"><span className="font-semibold text-gold">Meetings:</span> first Sunday of the month, 3pm</p>
           <div className="flex items-center gap-4">
             <a className="hover:underline" href="tel:+2348033208027">+234 803 320 8027</a>
-            <a className="hidden hover:underline sm:inline" href="mailto:info@udalagos.com.ng">info@udalagos.com.ng</a>
+            <a className="hover:underline" href="mailto:info@udalagos.com.ng">info@udalagos.com.ng</a>
           </div>
         </div>
       </div>
