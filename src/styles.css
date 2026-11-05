@@ -46,6 +46,7 @@
   --color-success: var(--success);
   --font-serif: Georgia, 'Times New Roman', serif;
   --color-gold: oklch(0.82 0.15 82);
+  --color-gold-bright: oklch(0.92 0.14 90);
   --color-feature: var(--feature);
   --color-feature-foreground: var(--feature-foreground);
   --color-input: var(--input);
