@@ -47,7 +47,7 @@ function Home() {
       <section className="border-b border-feature bg-feature text-feature-foreground">
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-6 py-10 text-center md:grid-cols-4">
           {[["250+", "Registered members"], ["Monthly", "General meetings"], ["3", "Core programmes"], ["24/7", "Online member portal"]].map(([n, l]) => (
-            <div key={l}><p className="font-serif text-3xl text-gold md:text-4xl">{n}</p><p className="mt-1 text-sm text-feature-foreground/75">{l}</p></div>
+            <div key={l}><p className="font-serif text-3xl text-gold-bright md:text-4xl">{n}</p><p className="mt-1 text-sm text-feature-foreground/75">{l}</p></div>
           ))}
         </div>
       </section>
