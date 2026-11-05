@@ -89,10 +89,12 @@ function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-20 text-center">
-        <h2 className="font-serif text-4xl">From Uzuakoli and living in Lagos?</h2>
-        <p className="mx-auto mt-4 max-w-xl text-muted-foreground">We'd love to welcome you. Get in touch to join the association or attend our next meeting.</p>
-        <Link to="/contact" className="mt-8 inline-block rounded-md bg-primary px-6 py-3 font-medium text-primary-foreground">Contact us</Link>
+      <section className="bg-feature text-feature-foreground">
+        <div className="mx-auto max-w-6xl px-6 py-20 text-center">
+          <h2 className="font-serif text-4xl">From Uzuakoli and living in Lagos?</h2>
+          <p className="mx-auto mt-4 max-w-xl text-feature-foreground/75">We'd love to welcome you. Get in touch to join the association or attend our next meeting.</p>
+          <Link to="/contact" className="mt-8 inline-block rounded-md bg-gold px-6 py-3 font-medium text-feature hover:opacity-90">Contact us</Link>
+        </div>
       </section>
     </SiteLayout>
   );
