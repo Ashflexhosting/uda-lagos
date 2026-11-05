@@ -48,6 +48,8 @@
   --color-gold: oklch(0.82 0.15 82);
   --color-feature: var(--feature);
   --color-feature-foreground: var(--feature-foreground);
+  --color-feature-navy: var(--feature-navy);
+  --color-feature-navy-foreground: var(--feature-navy-foreground);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
@@ -70,6 +72,8 @@
   --radius: 0.625rem;
   --feature: oklch(0.38 0.15 28);
   --feature-foreground: oklch(0.96 0.02 60);
+  --feature-navy: oklch(0.32 0.12 265);
+  --feature-navy-foreground: oklch(0.96 0.02 60);
   --background: oklch(0.98 0.01 95);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
@@ -108,6 +112,8 @@
 .dark {
   --feature: oklch(0.34 0.14 28);
   --feature-foreground: oklch(0.96 0.02 60);
+  --feature-navy: oklch(0.28 0.11 265);
+  --feature-navy-foreground: oklch(0.96 0.02 60);
   --success: oklch(0.7 0.15 155);
   --background: oklch(0.129 0.042 264.695);
   --foreground: oklch(0.984 0.003 247.858);
