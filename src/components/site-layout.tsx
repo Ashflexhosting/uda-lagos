@@ -62,6 +62,9 @@ export function SiteLayout({ children }: { children: ReactNode }) {
             <p className="mt-6 text-xs opacity-60">© {2026} UDA Lagos Branch</p>
           </div>
         </div>
+        <div className="border-t border-primary-foreground/20 py-4 text-center text-xs opacity-70">
+          Developed by <a className="underline hover:opacity-90" href="https://ashflexwebdesign.com/" target="_blank" rel="noopener noreferrer">Ashflex</a>
+        </div>
       </footer>
     </div>
   );
