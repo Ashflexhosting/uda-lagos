@@ -57,11 +57,11 @@ function Home() {
         <h2 className="mt-3 max-w-2xl font-serif text-4xl">Three commitments that hold us together</h2>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {pillars.map((p) => (
-            <div key={p.t} className="overflow-hidden rounded-xl border border-border bg-card">
+            <div key={p.t} className="overflow-hidden rounded-xl border border-feature bg-feature text-feature-foreground">
               <img src={p.img} alt={p.alt} width={1024} height={768} loading="lazy" className="aspect-[4/3] w-full object-cover" />
               <div className="p-8">
                 <h3 className="font-serif text-2xl">{p.t}</h3>
-                <p className="mt-3 text-muted-foreground">{p.d}</p>
+                <p className="mt-3 text-feature-foreground/75">{p.d}</p>
               </div>
             </div>
           ))}
