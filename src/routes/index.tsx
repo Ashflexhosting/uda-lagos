@@ -33,7 +33,7 @@ function Home() {
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-foreground/85 via-foreground/60 to-foreground/10" />
         <div className="mx-auto max-w-6xl px-6 py-28 text-background md:py-40">
           <p className="text-sm font-semibold uppercase tracking-[0.3em] opacity-90">Lagos Branch · Est. community of Uzuakoli</p>
-          <h1 className="mt-4 max-w-3xl font-serif text-5xl leading-tight md:text-7xl">Together for Uzuakoli, wherever we are.</h1>
+          <h1 className="mt-4 max-w-3xl font-serif text-5xl leading-tight text-gold-bright md:text-7xl">Together for Uzuakoli, wherever we are.</h1>
           <p className="mt-6 max-w-xl text-lg opacity-90">
             We are the sons and daughters of Uzuakoli living in Lagos — supporting one another and building a better home town.
           </p>
