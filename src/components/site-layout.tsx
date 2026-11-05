@@ -14,8 +14,8 @@ export function SiteLayout({ children }: { children: ReactNode }) {
     <div className="flex min-h-screen flex-col bg-background">
       <div className="bg-feature text-feature-foreground">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-1 px-4 py-1.5 text-xs sm:px-6">
-          <p className="hidden sm:block">Meetings: first Sunday of the month, 3pm · Spinal Cord Association Center, Ijesha</p>
-          <p className="sm:hidden">First Sunday of the month, 3pm</p>
+          <p className="hidden sm:block"><span className="font-semibold text-gold">Meetings:</span> first Sunday of the month, 3pm · Spinal Cord Association Center, Ijesha</p>
+          <p className="sm:hidden"><span className="font-semibold text-gold">Meetings:</span> first Sunday of the month, 3pm</p>
           <div className="flex items-center gap-4">
             <a className="hover:underline" href="tel:+2348033208027">+234 803 320 8027</a>
             <a className="hidden hover:underline sm:inline" href="mailto:info@udalagos.com.ng">info@udalagos.com.ng</a>
