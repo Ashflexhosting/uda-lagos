@@ -36,7 +36,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         </nav>
       </header>
       <main className="flex-1">{children}</main>
-      <footer className="bg-primary text-primary-foreground">
+      <footer className="bg-feature-navy text-feature-navy-foreground">
         <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 md:grid-cols-3">
           <div>
             <img src={emblem.url} alt="Uzuakoli Development Association emblem" width={64} height={64} className="mb-4 h-16 w-16" />
