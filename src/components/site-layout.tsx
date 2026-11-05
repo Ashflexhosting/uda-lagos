@@ -12,6 +12,16 @@ const nav = [
 export function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col bg-background">
+      <div className="bg-feature text-feature-foreground">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-1 px-4 py-1.5 text-xs sm:px-6">
+          <p className="hidden sm:block">Meetings: first Sunday of the month, 3pm · Spinal Cord Association Center, Ijesha</p>
+          <p className="sm:hidden">First Sunday of the month, 3pm</p>
+          <div className="flex items-center gap-4">
+            <a className="hover:underline" href="tel:+2348033208027">+234 803 320 8027</a>
+            <a className="hidden hover:underline sm:inline" href="mailto:info@udalagos.com.ng">info@udalagos.com.ng</a>
+          </div>
+        </div>
+      </div>
       <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
         <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-2 sm:flex sm:max-w-6xl sm:justify-between sm:gap-4 sm:px-6 sm:mx-auto">
           <Link to="/" className="flex min-w-0 items-center gap-3">
