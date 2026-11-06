@@ -6,7 +6,7 @@ import { listPublishedUpdates } from "@/lib/updates.functions";
 import { lagosDate, meetingTime, nextVillageMeetings } from "@/lib/meetings";
 
 export const nextMeetingsQuery = queryOptions({
-  queryKey: ["homepage-next-meetings"],
+  queryKey: ["published-updates", "homepage-next-meetings"],
   queryFn: async () => {
     try {
       const updates = await listPublishedUpdates();

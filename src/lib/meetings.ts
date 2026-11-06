@@ -17,7 +17,7 @@ export function lagosDate(now: Date): string {
 
 export function meetingTime(body: string): string | null {
   const match = body.match(/\b(1[0-2]|0?[1-9])(?::([0-5]\d))?\s*(a\.?m\.?|p\.?m\.?)\b/i);
-  if (!match) return null;
+  if (!match?.[1] || !match[3]) return null;
   return `${Number(match[1])}:${match[2] ?? "00"} ${match[3].replaceAll(".", "").toUpperCase()}`;
 }
 
