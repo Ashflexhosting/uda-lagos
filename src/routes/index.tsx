@@ -4,8 +4,10 @@ import hero from "@/assets/hero-gathering.jpg";
 import pillarWelfare from "@/assets/pillar-welfare.jpg";
 import pillarDevelopment from "@/assets/pillar-development.jpg";
 import pillarFellowship from "@/assets/pillar-fellowship.jpg";
+import { NextVillageMeetings, nextMeetingsQuery } from "@/components/next-village-meetings";
 
 export const Route = createFileRoute("/")({
+  loader: ({ context }) => context.queryClient.ensureQueryData(nextMeetingsQuery),
   head: () => ({
     meta: [
       { title: "UDA Lagos — Uzuakoli Development Association, Lagos Branch" },
@@ -17,6 +19,8 @@ export const Route = createFileRoute("/")({
     ],
   }),
   component: Home,
+  errorComponent: () => <SiteLayout><div className="mx-auto max-w-6xl px-6 py-16"><h1 className="font-serif text-3xl">UDA Lagos</h1><p className="mt-4">The page is temporarily unavailable. Please try again later.</p></div></SiteLayout>,
+  notFoundComponent: () => <SiteLayout><p className="px-6 py-16">Page not found.</p></SiteLayout>,
 });
 
 const pillars = [
@@ -51,6 +55,8 @@ function Home() {
           ))}
         </div>
       </section>
+
+      <NextVillageMeetings />
 
       <section className="mx-auto max-w-6xl px-6 py-20">
         <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">What we do</p>

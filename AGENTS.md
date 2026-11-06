@@ -11,6 +11,7 @@
 
 ## Architecture rules
 - Association news/events use public published-only reads and admin-role write policies; public listing runs through a publishable server client so drafts never reach visitors.
+- Homepage village meetings reuse the published updates reader and select all notices on the nearest non-past Lagos date; times come from notice text, and future recurrences are never fabricated.
 - Balances are computed in the `member_balances` view (brought forward + dues + welfare + dev levy − sum of payments); never store a balance column, so payments stay the single source of truth.
 - Members edit only contact fields via the `update_my_contact` RPC and admins approve proofs via `review_proof`; members have no direct UPDATE policy on `members`, so they can't change their own charges.
 - Member-number logins are auth users with a synthetic email from `memberLoginEmail()` in src/lib/members.ts, created only by the admin server function `setMemberLogin`.
