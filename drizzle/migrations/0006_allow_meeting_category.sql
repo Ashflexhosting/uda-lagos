@@ -1,0 +1,2 @@
+ALTER TABLE public.association_updates DROP CONSTRAINT association_updates_kind_check;
+ALTER TABLE public.association_updates ADD CONSTRAINT association_updates_kind_check CHECK (kind IN ('news', 'event', 'meeting'));
