@@ -50,6 +50,13 @@
       "when": 1793995032141,
       "tag": "0006_allow_meeting_category",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1793996051760,
+      "tag": "0007_add_update_image",
+      "breakpoints": true
     }
   ]
 }

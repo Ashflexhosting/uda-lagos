@@ -1,0 +1,1 @@
+ALTER TABLE public.association_updates ADD COLUMN IF NOT EXISTS image_url text;
