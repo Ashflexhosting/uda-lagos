@@ -20,6 +20,7 @@ export type Database = {
           created_at: string
           event_date: string | null
           id: string
+          image_url: string | null
           kind: string
           location: string | null
           published: boolean
@@ -30,6 +31,7 @@ export type Database = {
           created_at?: string
           event_date?: string | null
           id?: string
+          image_url?: string | null
           kind?: string
           location?: string | null
           published?: boolean
@@ -40,6 +42,7 @@ export type Database = {
           created_at?: string
           event_date?: string | null
           id?: string
+          image_url?: string | null
           kind?: string
           location?: string | null
           published?: boolean
