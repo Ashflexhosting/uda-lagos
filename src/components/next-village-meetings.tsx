@@ -33,8 +33,13 @@ export function NextVillageMeetings() {
       {date && <p className="mt-8 flex items-center gap-3 border-t border-meetings-foreground/20 pt-6 font-semibold text-gold-bright"><CalendarDays className="size-5 shrink-0" /><time dateTime={date}>{new Intl.DateTimeFormat("en-GB", { timeZone: "Africa/Lagos", weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(new Date(`${date}T12:00:00+01:00`))}</time></p>}
       {data.meetings.length > 0 ? <div className="mt-7 grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {data.meetings.map((meeting) => <article key={meeting.id} className="flex min-w-0 flex-col rounded-lg border-t-4 border-gold bg-card p-6 text-card-foreground">
-          <h3 className="break-words font-serif text-2xl leading-snug">{meeting.title.split(/\s+[—–]\s+/)[0]?.replace(/\s+Lagos Branch$/i, "")}</h3>
-          <p className="mt-2 break-words text-sm font-medium text-primary">{meeting.title.split(/\s+[—–]\s+/).slice(1).join(" — ") || meeting.title}</p>
+          <div className="flex items-start gap-4">
+            {meeting.image_url && <img src={meeting.image_url} alt={`${meeting.title.split(/\s+[—–]\s+/)[0]} logo`} width={64} height={64} loading="lazy" className="size-16 shrink-0 rounded-md object-contain" />}
+            <div className="min-w-0">
+              <h3 className="break-words font-serif text-2xl leading-snug">{meeting.title.split(/\s+[—–]\s+/)[0]?.replace(/\s+Lagos Branch$/i, "")}</h3>
+              <p className="mt-2 break-words text-sm font-medium text-primary">{meeting.title.split(/\s+[—–]\s+/).slice(1).join(" — ") || meeting.title}</p>
+            </div>
+          </div>
           <div className="mt-6 flex-1 border-t border-border pt-5">
             <p className="flex items-center gap-3 font-semibold"><Clock className="size-5 shrink-0 text-primary" />{meetingTime(meeting.body) ?? "Time to be confirmed"}</p>
             <p className="mt-4 flex items-start gap-3 text-sm leading-relaxed text-muted-foreground"><MapPin className="mt-1 size-5 shrink-0 text-primary" /><span className="break-words">{meeting.location || "Venue to be confirmed"}</span></p>
