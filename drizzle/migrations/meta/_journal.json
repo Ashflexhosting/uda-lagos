@@ -43,6 +43,13 @@
       "when": 1793777804047,
       "tag": "0005_create_newsletter_subscribers",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1793995032141,
+      "tag": "0006_allow_meeting_category",
+      "breakpoints": true
     }
   ]
 }

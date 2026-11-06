@@ -24,15 +24,15 @@ export const Route = createFileRoute("/news")({
 
 function News() {
   const { data: updates } = useSuspenseQuery(updatesQuery);
-  const [filter, setFilter] = useState<"all" | "news" | "event">("all");
+  const [filter, setFilter] = useState<"all" | "news" | "event" | "meeting">("all");
   const visible = updates.filter((item) => filter === "all" || item.kind === filter);
   return <SiteLayout>
     <section className="bg-primary text-primary-foreground"><div className="mx-auto max-w-6xl px-6 py-16"><p className="mb-3 text-sm uppercase">UDA Lagos Branch</p><h1 className="font-serif text-4xl">News & Events</h1></div></section>
     <section className="mx-auto w-full max-w-6xl px-6 py-12">
-      <div className="mb-8 flex gap-2" aria-label="Filter updates">{([['all', 'All'], ['news', 'News'], ['event', 'Events']] as const).map(([value, label]) => <Button key={value} variant={filter === value ? "default" : "outline"} aria-pressed={filter === value} onClick={() => setFilter(value)}>{label}</Button>)}</div>
-      {!visible.length && <div className="border-t border-border py-12"><Newspaper className="mb-4 size-8 text-primary"/><p className="font-serif text-xl">No {filter === 'event' ? 'events' : filter === 'news' ? 'news' : 'updates'} published yet.</p></div>}
+      <div className="mb-8 flex gap-2" aria-label="Filter updates">{([['all', 'All'], ['news', 'News'], ['event', 'Events'], ['meeting', 'Meetings']] as const).map(([value, label]) => <Button key={value} variant={filter === value ? "default" : "outline"} aria-pressed={filter === value} onClick={() => setFilter(value)}>{label}</Button>)}</div>
+      {!visible.length && <div className="border-t border-border py-12"><Newspaper className="mb-4 size-8 text-primary"/><p className="font-serif text-xl">No {filter === 'event' ? 'events' : filter === 'meeting' ? 'meetings' : filter === 'news' ? 'news' : 'updates'} published yet.</p></div>}
       <div className="divide-y divide-border">{visible.map((item) => <article key={item.id} className="py-8 first:pt-0">
-        <p className="mb-2 text-sm font-medium uppercase text-primary">{item.kind === 'event' ? 'Event' : 'News'}</p>
+        <p className="mb-2 text-sm font-medium uppercase text-primary">{item.kind === 'event' ? 'Event' : item.kind === 'meeting' ? 'Meeting' : 'News'}</p>
         <h2 className="break-words font-serif text-2xl">{item.title}</h2>
         <div className="my-4 flex flex-wrap gap-4 text-sm text-muted-foreground"><span className="flex items-center gap-2"><CalendarDays className="size-4"/>{new Date(`${item.event_date ?? item.created_at.slice(0,10)}T12:00:00`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>{item.location && <span className="flex items-center gap-2"><MapPin className="size-4"/>{item.location}</span>}</div>
         <p className="max-w-3xl whitespace-pre-wrap break-words leading-relaxed text-muted-foreground">{item.body}</p>
