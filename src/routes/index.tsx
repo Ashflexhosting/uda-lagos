@@ -56,8 +56,6 @@ function Home() {
         </div>
       </section>
 
-      <NextVillageMeetings />
-
       <section className="mx-auto max-w-6xl px-6 py-20">
         <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">What we do</p>
         <h2 className="mt-3 max-w-2xl font-serif text-4xl">Three commitments that hold us together</h2>
@@ -73,6 +71,8 @@ function Home() {
           ))}
         </div>
       </section>
+
+      <NextVillageMeetings />
 
       <section className="bg-secondary">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 md:grid-cols-2">
