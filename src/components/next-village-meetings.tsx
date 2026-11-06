@@ -33,7 +33,8 @@ export function NextVillageMeetings() {
       {date && <p className="mt-6 flex items-center gap-2 font-semibold text-primary"><CalendarDays className="size-5 shrink-0" /><time dateTime={date}>{new Intl.DateTimeFormat("en-GB", { timeZone: "Africa/Lagos", weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(new Date(`${date}T12:00:00+01:00`))}</time></p>}
       {data.meetings.length > 0 ? <div className="mt-6 grid gap-8 md:grid-cols-3">
         {data.meetings.map((meeting) => <article key={meeting.id} className="min-w-0 border-t border-border pt-5">
-          <h3 className="break-words font-serif text-xl">{meeting.title}</h3>
+          <p className="mb-2 break-words text-sm font-bold text-primary">{meeting.title.split(/\s+[—–]\s+/)[0]?.replace(/\s+Lagos Branch$/i, "")}</p>
+          <h3 className="break-words font-serif text-xl">{meeting.title.split(/\s+[—–]\s+/).slice(1).join(" — ") || meeting.title}</h3>
           <p className="mt-4 flex items-center gap-2 text-sm font-medium"><Clock className="size-4 shrink-0 text-primary" />{meetingTime(meeting.body) ?? "Time to be confirmed"}</p>
           <p className="mt-3 flex items-start gap-2 text-sm leading-relaxed text-muted-foreground"><MapPin className="mt-1 size-4 shrink-0 text-primary" /><span className="break-words">{meeting.location || "Venue to be confirmed"}</span></p>
         </article>)}
