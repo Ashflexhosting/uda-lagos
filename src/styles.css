@@ -49,6 +49,8 @@
   --color-gold-bright: oklch(0.92 0.14 90);
   --color-feature: var(--feature);
   --color-feature-foreground: var(--feature-foreground);
+  --color-meetings: var(--meetings);
+  --color-meetings-foreground: var(--meetings-foreground);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
@@ -68,6 +70,8 @@
 }
 
 :root {
+  --meetings: oklch(0.29 0.055 165);
+  --meetings-foreground: oklch(0.98 0.005 155);
   --radius: 0.625rem;
   --feature: oklch(0.38 0.15 28);
   --feature-foreground: oklch(0.96 0.02 60);
@@ -107,6 +111,8 @@
 }
 
 .dark {
+  --meetings: oklch(0.24 0.04 165);
+  --meetings-foreground: oklch(0.98 0.005 155);
   --feature: oklch(0.34 0.14 28);
   --feature-foreground: oklch(0.96 0.02 60);
   --success: oklch(0.7 0.15 155);
