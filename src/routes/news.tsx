@@ -77,7 +77,7 @@ function News() {
           <div className="p-5 sm:p-6">
             <div className="flex items-start gap-4">
               {item.image_url ? <img src={item.image_url} alt={`${title} logo`} width={72} height={72} loading="lazy" className="size-[72px] shrink-0 rounded-md border border-border bg-card object-contain p-1" /> : <div className={`flex size-[72px] shrink-0 items-center justify-center rounded-md ${isNews ? 'bg-feature/10 text-feature' : 'bg-primary/10 text-primary'}`}><Newspaper className="size-7" /></div>}
-              <div className="min-w-0"><h3 className="break-words font-serif text-2xl leading-snug">{title}</h3>{subtitle && <p className="mt-2 text-sm font-semibold text-primary">{subtitle}</p>}</div>
+              <div className="min-w-0"><h3 className={`break-words font-serif text-2xl leading-snug ${item.kind === 'meeting' ? 'font-bold' : ''}`}>{title}</h3>{subtitle && <p className="mt-2 text-sm font-semibold text-primary">{subtitle}</p>}</div>
             </div>
             <div className="mt-6 flex items-center gap-4 border-y border-border py-4">
               <div className="w-14 shrink-0 border-r border-border pr-4 text-center"><span className="block text-3xl font-semibold leading-none text-primary">{date.getDate()}</span><span className="mt-1 block text-xs font-semibold uppercase text-muted-foreground">{date.toLocaleDateString('en-GB', { month: 'short', timeZone: 'Africa/Lagos' })}</span></div>
