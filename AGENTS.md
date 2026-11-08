@@ -12,7 +12,7 @@
 ## Architecture rules
 - Association news/events use public published-only reads and admin-role write policies; public listing runs through a publishable server client so drafts never reach visitors.
 - Public village meeting dates are calculated by the shared published updates reader using the recurring Lagos-date calendar; original notice dates and text remain unchanged in storage, while homepage and News & Events share the same upcoming dates, times and venues.
-- News & Events renders the annual village calendar from the shared date helper and published notices; logo, time and venue details are reused rather than duplicated as static content.
+- News & Events renders only the current Lagos month's village calendar from the shared date helper and published notices; logo, time and venue details are reused rather than duplicated as static content.
 - Balances are computed in the `member_balances` view (brought forward + dues + welfare + dev levy − sum of payments); never store a balance column, so payments stay the single source of truth.
 - Members edit only contact fields via the `update_my_contact` RPC and admins approve proofs via `review_proof`; members have no direct UPDATE policy on `members`, so they can't change their own charges.
 - Member-number logins are auth users with a synthetic email from `memberLoginEmail()` in src/lib/members.ts, created only by the admin server function `setMemberLogin`.
