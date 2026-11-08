@@ -5,4 +5,4 @@
 - [x] Verify admin updates end-to-end — created, read back and deleted a temporary draft.
 - [x] Check admin account access and Members, Payments and Messages; show loading/errors and retry controls instead of misleading empty states.
 - [x] Attach the Odilamma Eluoma Progressive Union logo to its meeting notice and let admins attach a logo to any notice.
-- [ ] Add an automatic second-Sunday village calendar, skipping January, on the homepage and News & Events; test rollover and verify the calendar.
+- [x] Add an automatic second-Sunday village calendar, skipping January, on the homepage and News & Events; test rollover and verify the calendar.
