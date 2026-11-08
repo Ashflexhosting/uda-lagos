@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { listPublishedUpdates } from "@/lib/updates.functions";
 import { meetingTime } from "@/lib/meetings";
 import emblem from "@/assets/uda-emblem.png.asset.json";
+import { VillageMeetingCalendar } from "@/components/village-meeting-calendar";
 
 const updatesQuery = queryOptions({ queryKey: ["published-updates"], queryFn: () => listPublishedUpdates() });
 export const Route = createFileRoute("/news")({
@@ -58,6 +59,7 @@ function News() {
           return <Button key={value} variant={filter === value ? "default" : "ghost"} className="h-11 gap-2 rounded-md px-3 sm:px-4" aria-pressed={filter === value} onClick={() => setFilter(value)}><Icon className="size-4" /><span>{label}</span><span className="ml-1 text-xs opacity-70">{count}</span></Button>;
         })}
       </div>
+      {filter === 'meeting' && visible[0]?.event_date && <div className="mt-8"><VillageMeetingCalendar nextDate={visible[0].event_date} /></div>}
       <div className="mb-6 mt-8 flex items-center justify-between gap-4"><h2 className="font-serif text-2xl">{filter === 'all' ? 'Latest updates' : filter === 'meeting' ? 'Village meetings' : filter === 'event' ? 'Events' : 'Association news'}</h2><span className="text-sm text-muted-foreground">{visible.length} {visible.length === 1 ? 'notice' : 'notices'}</span></div>
       {!visible.length && <div className="py-16 text-center"><Newspaper className="mx-auto mb-4 size-9 text-primary"/><p className="font-serif text-xl">No {filter === 'event' ? 'events' : filter === 'meeting' ? 'meetings' : filter === 'news' ? 'news' : 'updates'} published yet.</p></div>}
       <div className="grid items-start gap-6 md:grid-cols-2">{visible.map((item) => {
@@ -84,7 +86,8 @@ function News() {
               <div className="min-w-0"><p className="text-sm font-semibold">{date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Africa/Lagos' })}</p>{time && <p className="mt-1 flex items-center gap-2 text-sm text-primary"><Clock className="size-4" />{time}</p>}</div>
             </div>
             {item.location && <p className="mt-4 flex items-start gap-2 text-sm leading-relaxed text-muted-foreground"><MapPin className="mt-0.5 size-4 shrink-0 text-primary" /><span className="break-words">{item.location}</span></p>}
-            <p id={`notice-${item.id}`} className={`mt-5 whitespace-pre-wrap break-words text-sm leading-7 text-muted-foreground ${open ? '' : 'line-clamp-3'}`}>{item.body}</p>
+             {item.kind === 'meeting' && item.original_event_date && item.original_event_date !== item.event_date && <p className="mt-5 text-xs font-semibold text-muted-foreground">Original notice · {new Date(`${item.original_event_date}T12:00:00+01:00`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Africa/Lagos' })}</p>}
+             <p id={`notice-${item.id}`} className={`mt-5 whitespace-pre-wrap break-words text-sm leading-7 text-muted-foreground ${open ? '' : 'line-clamp-3'}`}>{item.body}</p>
             <Button variant="ghost" aria-expanded={open} aria-controls={`notice-${item.id}`} onClick={() => toggleNotice(item.id)} className="mt-5 h-10 w-full justify-between rounded-none border-t border-border px-0 text-primary hover:bg-transparent">{open ? 'Close notice' : 'Read full notice'}{open ? <ArrowUp className="size-4" /> : <ArrowDown className="size-4" />}</Button>
           </div>
         </article>;

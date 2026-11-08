@@ -4,6 +4,7 @@ import { ArrowRight, CalendarDays, Clock, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { listPublishedUpdates } from "@/lib/updates.functions";
 import { lagosDate, meetingTime, nextVillageMeetings } from "@/lib/meetings";
+import { VillageMeetingCalendar } from "@/components/village-meeting-calendar";
 
 export const nextMeetingsQuery = queryOptions({
   queryKey: ["published-updates", "homepage-next-meetings"],
@@ -30,6 +31,7 @@ export function NextVillageMeetings() {
         </div>
         <Button asChild variant="outline" className="border-meetings-foreground/30 bg-transparent text-meetings-foreground hover:bg-meetings-foreground/10 hover:text-meetings-foreground"><Link to="/news">View meeting notices <ArrowRight /></Link></Button>
       </div>
+      {date && <div className="mt-8"><VillageMeetingCalendar nextDate={date} /></div>}
       {date && <p className="mt-8 flex items-center gap-3 border-t border-meetings-foreground/20 pt-6 font-semibold text-gold-bright"><CalendarDays className="size-5 shrink-0" /><time dateTime={date}>{new Intl.DateTimeFormat("en-GB", { timeZone: "Africa/Lagos", weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(new Date(`${date}T12:00:00+01:00`))}</time></p>}
       {data.meetings.length > 0 ? <div className="mt-7 grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {data.meetings.map((meeting) => <article key={meeting.id} className="flex min-w-0 flex-col rounded-lg border-t-4 border-gold bg-card p-6 text-card-foreground">

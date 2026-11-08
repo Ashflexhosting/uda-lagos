@@ -1,3 +1,5 @@
+import { addDays, addMonths, format, getDay, startOfMonth } from "date-fns";
+
 export type MeetingNotice = {
   id: string;
   kind: string;
@@ -6,6 +8,30 @@ export type MeetingNotice = {
   event_date: string | null;
   location: string | null;
 };
+
+export function villageMeetingDate(month: Date): Date | null {
+  const first = startOfMonth(month);
+  if (first.getMonth() === 0) return null;
+  return addDays(first, 7 + (7 - getDay(first)) % 7);
+}
+
+export function nextVillageMeetingDate(today: string): string {
+  let month = new Date(`${today}T12:00:00`);
+  for (let offset = 0; offset < 14; offset++) {
+    const date = villageMeetingDate(month);
+    if (date && format(date, "yyyy-MM-dd") >= today) return format(date, "yyyy-MM-dd");
+    month = addMonths(startOfMonth(month), 1);
+  }
+  throw new Error("Unable to find a village meeting date.");
+}
+
+export function recurringVillageMeetings<T extends MeetingNotice>(updates: T[], today: string) {
+  return updates.map(item => ({
+    ...item,
+    original_event_date: item.event_date,
+    event_date: item.kind === "meeting" ? nextVillageMeetingDate(today) : item.event_date,
+  }));
+}
 
 export function lagosDate(now: Date): string {
   const parts = new Intl.DateTimeFormat("en-GB", {
