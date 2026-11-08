@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { listPublishedUpdates } from "@/lib/updates.functions";
 import { meetingTime } from "@/lib/meetings";
 import emblem from "@/assets/uda-emblem.png.asset.json";
-import { VillageMeetingCalendar } from "@/components/village-meeting-calendar";
+import { VillageMeetingYearCalendar } from "@/components/village-meeting-year-calendar";
 
 const updatesQuery = queryOptions({ queryKey: ["published-updates"], queryFn: () => listPublishedUpdates() });
 export const Route = createFileRoute("/news")({
@@ -59,7 +59,7 @@ function News() {
           return <Button key={value} variant={filter === value ? "default" : "ghost"} className="h-11 gap-2 rounded-md px-3 sm:px-4" aria-pressed={filter === value} onClick={() => setFilter(value)}><Icon className="size-4" /><span>{label}</span><span className="ml-1 text-xs opacity-70">{count}</span></Button>;
         })}
       </div>
-      {filter === 'meeting' && visible[0]?.event_date && <div className="mt-8"><VillageMeetingCalendar nextDate={visible[0].event_date} /></div>}
+      {(filter === 'all' || filter === 'meeting') && <VillageMeetingYearCalendar meetings={updates.filter(item => item.kind === 'meeting')} />}
       <div className="mb-6 mt-8 flex items-center justify-between gap-4"><h2 className="font-serif text-2xl">{filter === 'all' ? 'Latest updates' : filter === 'meeting' ? 'Village meetings' : filter === 'event' ? 'Events' : 'Association news'}</h2><span className="text-sm text-muted-foreground">{visible.length} {visible.length === 1 ? 'notice' : 'notices'}</span></div>
       {!visible.length && <div className="py-16 text-center"><Newspaper className="mx-auto mb-4 size-9 text-primary"/><p className="font-serif text-xl">No {filter === 'event' ? 'events' : filter === 'meeting' ? 'meetings' : filter === 'news' ? 'news' : 'updates'} published yet.</p></div>}
       <div className="grid items-start gap-6 md:grid-cols-2">{visible.map((item) => {
