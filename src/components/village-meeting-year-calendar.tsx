@@ -1,26 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import { ChevronLeft, ChevronRight, Clock, MapPin, Users } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Clock, MapPin, Users } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
-import { meetingTime, villageMeetingDate, type MeetingNotice } from "@/lib/meetings";
+import { lagosDate, meetingTime, villageMeetingDate, type MeetingNotice } from "@/lib/meetings";
 
 type Village = MeetingNotice & { image_url: string | null };
 
 export function VillageMeetingYearCalendar({ meetings }: { meetings: Village[] }) {
-  const [year, setYear] = useState(() => Number(meetings[0]?.event_date?.slice(0, 4)));
-  if (!meetings.length || !Number.isFinite(year)) return null;
+  const [month, setMonth] = useState<Date | null>(null);
+  useEffect(() => {
+    const updateMonth = () => setMonth(new Date(`${lagosDate(new Date()).slice(0, 7)}-01T12:00:00`));
+    updateMonth();
+    const interval = window.setInterval(updateMonth, 60_000);
+    return () => window.clearInterval(interval);
+  }, []);
+  if (!meetings.length || !month) return null;
+  const date = villageMeetingDate(month);
   return <section aria-labelledby="annual-village-calendar" className="mt-8 border-b border-border pb-10">
     <div className="flex flex-wrap items-center justify-between gap-4">
       <div>
         <p className="text-sm font-semibold text-primary">Second Sunday · February–December</p>
         <h2 id="annual-village-calendar" className="mt-2 font-serif text-3xl font-bold">Village meeting calendar</h2>
       </div>
-      <div className="flex items-center gap-3" aria-label="Calendar year">
-        <Button variant="outline" size="icon" aria-label="Previous year" onClick={() => setYear(current => current - 1)}><ChevronLeft /></Button>
-        <span className="w-16 text-center text-xl font-semibold" aria-live="polite">{year}</span>
-        <Button variant="outline" size="icon" aria-label="Next year" onClick={() => setYear(current => current + 1)}><ChevronRight /></Button>
-      </div>
+      <p className="text-xl font-semibold">{format(month, "MMMM yyyy")}</p>
     </div>
     <div className="my-8 grid gap-x-8 sm:grid-cols-2">
       {meetings.map(meeting => {
@@ -35,11 +37,7 @@ export function VillageMeetingYearCalendar({ meetings }: { meetings: Village[] }
         </article>;
       })}
     </div>
-    <div className="grid justify-items-center gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" aria-label={`${year} village meeting dates`}>
-      {Array.from({ length: 12 }, (_, index) => {
-        const month = new Date(year, index, 1, 12);
-        const date = villageMeetingDate(month);
-        return <div key={`${year}-${index}`} className="w-full min-w-0 border-t-2 border-primary pt-3">
+    <div aria-label="Current month village meeting dates" className="border-t-2 border-primary pt-4">
           <Calendar
             aria-label={`${format(month, "MMMM yyyy")} village meetings`}
             month={month}
@@ -52,8 +50,6 @@ export function VillageMeetingYearCalendar({ meetings }: { meetings: Village[] }
             className="mx-auto p-0"
           />
           <p className={`mt-3 text-center text-sm font-semibold ${date ? 'text-primary' : 'text-muted-foreground'}`}>{date ? <time dateTime={format(date, "yyyy-MM-dd")}>{format(date, "EEE, d MMMM")}</time> : "No meetings in January"}</p>
-        </div>;
-      })}
     </div>
   </section>;
 }
