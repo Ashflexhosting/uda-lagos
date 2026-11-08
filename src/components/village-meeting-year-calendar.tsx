@@ -1,20 +1,23 @@
 import { useEffect, useState } from "react";
-import { format } from "date-fns";
-import { Clock, MapPin, Users } from "lucide-react";
+import { addMonths, format } from "date-fns";
+import { ChevronLeft, ChevronRight, Clock, MapPin, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { lagosDate, meetingTime, villageMeetingDate, type MeetingNotice } from "@/lib/meetings";
 
 type Village = MeetingNotice & { image_url: string | null };
 
 export function VillageMeetingYearCalendar({ meetings }: { meetings: Village[] }) {
-  const [month, setMonth] = useState<Date | null>(null);
+  const [currentMonth, setCurrentMonth] = useState<Date | null>(null);
+  const [monthOffset, setMonthOffset] = useState(0);
   useEffect(() => {
-    const updateMonth = () => setMonth(new Date(`${lagosDate(new Date()).slice(0, 7)}-01T12:00:00`));
+    const updateMonth = () => setCurrentMonth(new Date(`${lagosDate(new Date()).slice(0, 7)}-01T12:00:00`));
     updateMonth();
     const interval = window.setInterval(updateMonth, 60_000);
     return () => window.clearInterval(interval);
   }, []);
-  if (!meetings.length || !month) return null;
+  if (!meetings.length || !currentMonth) return null;
+  const month = addMonths(currentMonth, monthOffset);
   const date = villageMeetingDate(month);
   return <section aria-labelledby="annual-village-calendar" className="mt-8 border-b border-border pb-10">
     <div className="flex flex-wrap items-center justify-between gap-4">
@@ -22,7 +25,11 @@ export function VillageMeetingYearCalendar({ meetings }: { meetings: Village[] }
         <p className="text-sm font-semibold text-primary">Second Sunday · February–December</p>
         <h2 id="annual-village-calendar" className="mt-2 font-serif text-3xl font-bold">Village meeting calendar</h2>
       </div>
-      <p className="text-xl font-semibold">{format(month, "MMMM yyyy")}</p>
+      <div className="flex items-center gap-2" aria-label="Browse meeting months">
+        <Button variant="outline" size="icon" title="Previous month" aria-label="Previous month" onClick={() => setMonthOffset(offset => offset - 1)}><ChevronLeft /></Button>
+        <p aria-live="polite" className="w-40 text-center text-lg font-semibold">{format(month, "MMMM yyyy")}</p>
+        <Button variant="outline" size="icon" title="Next month" aria-label="Next month" onClick={() => setMonthOffset(offset => offset + 1)}><ChevronRight /></Button>
+      </div>
     </div>
     <div className="my-8 grid gap-x-8 sm:grid-cols-2">
       {meetings.map(meeting => {
@@ -37,7 +44,7 @@ export function VillageMeetingYearCalendar({ meetings }: { meetings: Village[] }
         </article>;
       })}
     </div>
-    <div aria-label="Current month village meeting dates" className="border-t-2 border-primary pt-4">
+    <div aria-label="Selected month village meeting dates" className="border-t-2 border-primary pt-4">
           <Calendar
             aria-label={`${format(month, "MMMM yyyy")} village meetings`}
             month={month}
