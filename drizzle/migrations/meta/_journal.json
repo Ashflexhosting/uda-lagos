@@ -57,6 +57,13 @@
       "when": 1793996051760,
       "tag": "0007_add_update_image",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1794116565117,
+      "tag": "0008_tighten_newsletter_insert",
+      "breakpoints": true
     }
   ]
 }
