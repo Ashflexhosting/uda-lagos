@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
+import { lagosDate, recurringVillageMeetings } from "@/lib/meetings";
 
 export const listPublishedUpdates = createServerFn({ method: "GET" }).handler(async () => {
   const url = process.env["SUPABASE_URL"];
@@ -19,5 +20,5 @@ export const listPublishedUpdates = createServerFn({ method: "GET" }).handler(as
     .select("id,title,body,kind,event_date,location,image_url,created_at")
     .eq("published", true).order("created_at", { ascending: false });
   if (error) throw new Error("News is temporarily unavailable.");
-  return data;
+  return recurringVillageMeetings(data, lagosDate(new Date()));
 });
