@@ -13,6 +13,7 @@ export function VillageMeetingCalendar({ nextDate }: { nextDate: string }) {
       onMonthChange={setMonth}
       mode="single"
       selected={meetingDate ?? undefined}
+      onSelect={() => {}}
       showOutsideDays={false}
       weekStartsOn={0}
       className="shrink-0 p-0"
