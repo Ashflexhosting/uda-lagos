@@ -6,7 +6,7 @@ import { villageMeetingDate } from "@/lib/meetings";
 export function VillageMeetingCalendar({ nextDate }: { nextDate: string }) {
   const [month, setMonth] = useState(() => new Date(`${nextDate}T12:00:00`));
   const meetingDate = villageMeetingDate(month);
-  return <div className="flex flex-wrap items-center gap-6 border-y border-border bg-background p-4 text-foreground sm:gap-10">
+  return <div className="flex flex-col items-start gap-6 border-y border-border bg-background p-4 text-foreground sm:flex-row sm:items-center sm:gap-10">
     <Calendar
       aria-label="Village meeting calendar"
       month={month}
@@ -16,7 +16,7 @@ export function VillageMeetingCalendar({ nextDate }: { nextDate: string }) {
       onSelect={() => {}}
       showOutsideDays={false}
       weekStartsOn={0}
-      className="shrink-0 p-0"
+      className="mx-auto shrink-0 p-0 sm:mx-0"
     />
     <div className="min-w-0 flex-1">
       <h3 className="font-serif text-2xl font-bold">Village meeting calendar</h3>
