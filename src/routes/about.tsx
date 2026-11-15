@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Users } from "lucide-react";
 import { SiteLayout } from "@/components/site-layout";
 import { BankAccounts } from "@/components/bank-accounts";
+import emblem from "@/assets/uda-emblem.png.asset.json";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -19,10 +21,17 @@ export const Route = createFileRoute("/about")({
 function About() {
   return (
     <SiteLayout>
-      <section className="bg-primary text-primary-foreground">
-        <div className="mx-auto max-w-6xl px-6 py-20">
-          <p className="text-xs uppercase tracking-[0.3em] opacity-70">About us</p>
-          <h1 className="mt-3 max-w-3xl font-serif text-5xl md:text-6xl">A home away from home for Uzuakoli people in Lagos</h1>
+      <section className="overflow-hidden bg-meetings text-meetings-foreground">
+        <div className="mx-auto max-w-6xl px-5 pb-10 pt-12 md:px-6 md:pb-12 md:pt-16">
+          <div className="flex items-center gap-3 text-sm font-semibold text-gold-bright"><span className="h-px w-8 bg-gold-bright" aria-hidden="true" />UDA Lagos Branch</div>
+          <div className="mt-5 flex items-center justify-between gap-6">
+            <h1 className="max-w-3xl font-serif text-4xl leading-tight sm:text-5xl md:text-6xl">A <span className="text-gold-bright">home</span> away from home for Uzuakoli people in Lagos</h1>
+            <img src={emblem.url} alt="Uzuakoli Development Association emblem" width={112} height={112} className="hidden size-28 shrink-0 object-contain sm:block" />
+          </div>
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-meetings-foreground/20 pt-5">
+            <p className="text-sm text-meetings-foreground/80">Uzuakoli Development Association, Lagos Branch</p>
+            <span className="flex items-center gap-2 text-sm font-medium text-gold-bright"><Users className="size-4" />Who we are</span>
+          </div>
         </div>
       </section>
 
