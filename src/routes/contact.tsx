@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
+import { Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteLayout } from "@/components/site-layout";
+import emblem from "@/assets/uda-emblem.png.asset.json";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
