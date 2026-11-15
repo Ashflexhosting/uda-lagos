@@ -38,10 +38,17 @@ function Contact() {
 
   return (
     <SiteLayout>
-      <section className="bg-primary text-primary-foreground">
-        <div className="mx-auto max-w-6xl px-6 py-20">
-          <p className="text-xs uppercase tracking-[0.3em] opacity-70">Contact</p>
-          <h1 className="mt-3 font-serif text-5xl md:text-6xl">We'd love to hear from you</h1>
+      <section className="overflow-hidden bg-meetings text-meetings-foreground">
+        <div className="mx-auto max-w-6xl px-5 pb-10 pt-12 md:px-6 md:pb-12 md:pt-16">
+          <div className="flex items-center gap-3 text-sm font-semibold text-gold-bright"><span className="h-px w-8 bg-gold-bright" aria-hidden="true" />UDA Lagos Branch</div>
+          <div className="mt-5 flex items-center justify-between gap-6">
+            <h1 className="font-serif text-4xl leading-tight sm:text-5xl md:text-6xl">We'd love to <span className="text-gold-bright">hear</span> from you</h1>
+            <img src={emblem.url} alt="Uzuakoli Development Association emblem" width={112} height={112} className="hidden size-28 shrink-0 object-contain sm:block" />
+          </div>
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-meetings-foreground/20 pt-5">
+            <p className="text-sm text-meetings-foreground/80">Uzuakoli Development Association, Lagos Branch</p>
+            <span className="flex items-center gap-2 text-sm font-medium text-gold-bright"><Mail className="size-4" />Get in touch</span>
+          </div>
         </div>
       </section>
       <section className="mx-auto grid max-w-6xl gap-12 px-6 py-20 md:grid-cols-[1fr_1.3fr]">
