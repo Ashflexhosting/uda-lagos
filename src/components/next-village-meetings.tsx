@@ -38,7 +38,7 @@ export function NextVillageMeetings() {
           <div className="flex items-start gap-4">
             {meeting.image_url && <img src={meeting.image_url} alt={`${meeting.title.split(/\s+[—–]\s+/)[0]} logo`} width={64} height={64} loading="lazy" className="size-16 shrink-0 rounded-md object-contain" />}
             <div className="min-w-0">
-              <h3 className="break-words font-serif text-2xl leading-snug">{meeting.title.split(/\s+[—–]\s+/)[0]?.replace(/\s+Lagos Branch$/i, "")}</h3>
+              <h3 className={`break-words font-serif leading-snug ${meeting.image_url ? "whitespace-nowrap text-xl" : "text-2xl"}`}>{meeting.title.split(/\s+[—–]\s+/)[0]?.replace(/\s+Lagos Branch$/i, "")}</h3>
               <p className="mt-2 break-words text-sm font-medium text-primary">{meeting.title.split(/\s+[—–]\s+/).slice(1).join(" — ") || meeting.title}</p>
             </div>
           </div>
