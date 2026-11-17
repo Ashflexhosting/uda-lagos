@@ -7,3 +7,4 @@
 - [x] Attach the Odilamma Eluoma Progressive Union logo to its meeting notice and let admins attach a logo to any notice.
 - [x] Add an automatic second-Sunday village calendar, skipping January, on the homepage and News & Events; test rollover and verify the calendar.
 - [x] Show the full-year calendar on News & Events with village logos and venues; verify year navigation and phone layout.
+- [x] Show the deceased's portrait large on the funeral notice on News & Events; verify desktop and phone.

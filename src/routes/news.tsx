@@ -67,6 +67,7 @@ function News() {
         const date = new Date(`${dateString}T12:00:00+01:00`);
         const isNews = item.kind === 'news';
         const open = expanded.has(item.id);
+        const largePhoto = item.kind === 'event' ? item.image_url : null;
         const time = meetingTime(item.body);
         const titleParts = item.title.split(/\s+[—–]\s+/);
         const title = titleParts[0];
@@ -77,8 +78,9 @@ function News() {
             <time dateTime={dateString} className="text-xs opacity-80">{date.toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'Africa/Lagos' })}</time>
           </div>
           <div className="p-5 sm:p-6">
+            {largePhoto && <figure className="mb-6 flex flex-col items-center"><img src={largePhoto} alt={`Portrait of ${title}`} loading="lazy" className="max-h-[22rem] w-auto rounded-lg border border-border bg-card object-contain shadow-sm" /><span className="mt-3 text-center text-xs font-semibold uppercase tracking-wide text-muted-foreground">In loving memory</span></figure>}
             <div className="flex items-start gap-4">
-              {item.image_url ? <img src={item.image_url} alt={`${title} logo`} width={72} height={72} loading="lazy" className="size-[72px] shrink-0 rounded-md border border-border bg-card object-contain p-1" /> : <div className={`flex size-[72px] shrink-0 items-center justify-center rounded-md ${isNews ? 'bg-feature/10 text-feature' : 'bg-primary/10 text-primary'}`}><Newspaper className="size-7" /></div>}
+              {!largePhoto && (item.image_url ? <img src={item.image_url} alt={`${title} logo`} width={72} height={72} loading="lazy" className="size-[72px] shrink-0 rounded-md border border-border bg-card object-contain p-1" /> : <div className={`flex size-[72px] shrink-0 items-center justify-center rounded-md ${isNews ? 'bg-feature/10 text-feature' : 'bg-primary/10 text-primary'}`}><Newspaper className="size-7" /></div>)}
               <div className="min-w-0"><h3 className={`break-words font-serif text-2xl leading-snug ${item.kind === 'meeting' ? 'font-bold' : ''}`}>{title}</h3>{subtitle && <p className="mt-2 text-sm font-semibold text-primary">{subtitle}</p>}</div>
             </div>
             <div className="mt-6 flex items-center gap-4 border-y border-border py-4">
