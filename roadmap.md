@@ -8,3 +8,4 @@
 - [x] Add an automatic second-Sunday village calendar, skipping January, on the homepage and News & Events; test rollover and verify the calendar.
 - [x] Show the full-year calendar on News & Events with village logos and venues; verify year navigation and phone layout.
 - [x] Show the deceased's portrait large on the funeral notice on News & Events; verify desktop and phone.
+- [x] Redesign the event notice card as a full-width feature card with a photo panel; verify desktop and phone.

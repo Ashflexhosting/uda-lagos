@@ -72,25 +72,53 @@ function News() {
         const titleParts = item.title.split(/\s+[—–]\s+/);
         const title = titleParts[0];
         const subtitle = titleParts.slice(1).join(' — ');
+        const monthYear = date.toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'Africa/Lagos' });
+        const heading = <div className="min-w-0"><h3 className={`break-words font-serif leading-snug ${largePhoto ? 'text-3xl sm:text-4xl' : 'text-2xl'} ${item.kind === 'meeting' ? 'font-bold' : ''}`}>{title}</h3>{subtitle && <p className="mt-2 text-sm font-semibold text-primary">{subtitle}</p>}</div>;
+        const details = <>
+          {item.kind === 'meeting' && item.original_event_date && item.original_event_date !== item.event_date && <p className="mb-4 text-xs font-semibold text-muted-foreground">Original notice · {new Date(`${item.original_event_date}T12:00:00+01:00`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Africa/Lagos' })}</p>}
+          <p id={`notice-${item.id}`} className={`whitespace-pre-wrap break-words text-sm leading-7 text-muted-foreground ${open ? '' : 'line-clamp-3'}`}>{item.body}</p>
+          <Button variant="ghost" aria-expanded={open} aria-controls={`notice-${item.id}`} onClick={() => toggleNotice(item.id)} className="mt-5 h-10 w-full justify-between rounded-none border-t border-border px-0 text-primary hover:bg-transparent">{open ? 'Close notice' : 'Read full notice'}{open ? <ArrowUp className="size-4" /> : <ArrowDown className="size-4" />}</Button>
+        </>;
+        if (largePhoto) return <article key={item.id} className="min-w-0 overflow-hidden rounded-lg border border-border bg-card text-card-foreground md:col-span-2">
+          <div className="md:flex">
+            <div className="relative shrink-0 md:w-[42%]">
+              <img src={largePhoto} alt={title} loading="lazy" className="h-auto w-full object-cover md:h-full md:min-h-[28rem]" />
+              <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 bg-gradient-to-t from-meetings via-meetings/70 to-transparent px-5 pb-4 pt-12 md:hidden">
+                <p className="flex items-center gap-2 text-xs font-bold uppercase text-gold-bright"><CalendarDays className="size-4" />Event</p>
+                <span className="text-xs text-meetings-foreground/80">{monthYear}</span>
+              </div>
+            </div>
+            <div className="min-w-0 flex-1 p-5 sm:p-7">
+              <div className="hidden items-center justify-between gap-4 border-b border-border pb-4 md:flex">
+                <p className="flex items-center gap-2 text-xs font-bold uppercase text-primary"><CalendarDays className="size-4" />Event</p>
+                <time dateTime={dateString} className="text-xs text-muted-foreground">{monthYear}</time>
+              </div>
+              <div className="mt-5 md:mt-6">{heading}</div>
+              <div className="mt-5 flex items-center gap-4 rounded-lg bg-meetings px-4 py-4 text-meetings-foreground">
+                <div className="w-14 shrink-0 border-r border-meetings-foreground/25 pr-4 text-center"><span className="block text-3xl font-semibold leading-none text-gold-bright">{date.getDate()}</span><span className="mt-1 block text-xs font-semibold uppercase text-meetings-foreground/80">{date.toLocaleDateString('en-GB', { month: 'short', timeZone: 'Africa/Lagos' })}</span></div>
+                <div className="min-w-0"><p className="text-sm font-semibold">{date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Africa/Lagos' })}</p>{time && <p className="mt-1 flex items-center gap-2 text-sm text-gold-bright"><Clock className="size-4" />{time}</p>}</div>
+              </div>
+              {item.location && <p className="mt-4 flex items-start gap-2 text-sm leading-relaxed text-muted-foreground"><MapPin className="mt-0.5 size-4 shrink-0 text-primary" /><span className="break-words">{item.location}</span></p>}
+              <div className="mt-5">{details}</div>
+            </div>
+          </div>
+        </article>;
         return <article key={item.id} className={`min-w-0 overflow-hidden rounded-lg border bg-card text-card-foreground ${isNews ? 'border-feature/30' : 'border-border'}`}>
           <div className={`flex items-center justify-between gap-4 px-6 py-3 ${isNews ? 'bg-feature text-feature-foreground' : 'bg-meetings text-meetings-foreground'}`}>
             <p className="flex items-center gap-2 text-xs font-bold uppercase">{isNews ? <Newspaper className="size-4" /> : item.kind === 'meeting' ? <Users className="size-4" /> : <CalendarDays className="size-4" />}{item.kind === 'event' ? 'Event' : item.kind === 'meeting' ? 'Meeting' : 'News'}</p>
-            <time dateTime={dateString} className="text-xs opacity-80">{date.toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'Africa/Lagos' })}</time>
+            <time dateTime={dateString} className="text-xs opacity-80">{monthYear}</time>
           </div>
           <div className="p-5 sm:p-6">
-            {largePhoto && <figure className="mb-6 flex flex-col items-center"><img src={largePhoto} alt={`Portrait of ${title}`} loading="lazy" className="max-h-[22rem] w-auto rounded-lg border border-border bg-card object-contain shadow-sm" /><span className="mt-3 text-center text-xs font-semibold uppercase tracking-wide text-muted-foreground">In loving memory</span></figure>}
             <div className="flex items-start gap-4">
-              {!largePhoto && (item.image_url ? <img src={item.image_url} alt={`${title} logo`} width={72} height={72} loading="lazy" className="size-[72px] shrink-0 rounded-md border border-border bg-card object-contain p-1" /> : <div className={`flex size-[72px] shrink-0 items-center justify-center rounded-md ${isNews ? 'bg-feature/10 text-feature' : 'bg-primary/10 text-primary'}`}><Newspaper className="size-7" /></div>)}
-              <div className="min-w-0"><h3 className={`break-words font-serif text-2xl leading-snug ${item.kind === 'meeting' ? 'font-bold' : ''}`}>{title}</h3>{subtitle && <p className="mt-2 text-sm font-semibold text-primary">{subtitle}</p>}</div>
+              {item.image_url ? <img src={item.image_url} alt={`${title} logo`} width={72} height={72} loading="lazy" className="size-[72px] shrink-0 rounded-md border border-border bg-card object-contain p-1" /> : <div className={`flex size-[72px] shrink-0 items-center justify-center rounded-md ${isNews ? 'bg-feature/10 text-feature' : 'bg-primary/10 text-primary'}`}><Newspaper className="size-7" /></div>}
+              {heading}
             </div>
             <div className="mt-6 flex items-center gap-4 border-y border-border py-4">
               <div className="w-14 shrink-0 border-r border-border pr-4 text-center"><span className="block text-3xl font-semibold leading-none text-primary">{date.getDate()}</span><span className="mt-1 block text-xs font-semibold uppercase text-muted-foreground">{date.toLocaleDateString('en-GB', { month: 'short', timeZone: 'Africa/Lagos' })}</span></div>
               <div className="min-w-0"><p className="text-sm font-semibold">{date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Africa/Lagos' })}</p>{time && <p className="mt-1 flex items-center gap-2 text-sm text-primary"><Clock className="size-4" />{time}</p>}</div>
             </div>
             {item.location && <p className="mt-4 flex items-start gap-2 text-sm leading-relaxed text-muted-foreground"><MapPin className="mt-0.5 size-4 shrink-0 text-primary" /><span className="break-words">{item.location}</span></p>}
-             {item.kind === 'meeting' && item.original_event_date && item.original_event_date !== item.event_date && <p className="mt-5 text-xs font-semibold text-muted-foreground">Original notice · {new Date(`${item.original_event_date}T12:00:00+01:00`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Africa/Lagos' })}</p>}
-             <p id={`notice-${item.id}`} className={`mt-5 whitespace-pre-wrap break-words text-sm leading-7 text-muted-foreground ${open ? '' : 'line-clamp-3'}`}>{item.body}</p>
-            <Button variant="ghost" aria-expanded={open} aria-controls={`notice-${item.id}`} onClick={() => toggleNotice(item.id)} className="mt-5 h-10 w-full justify-between rounded-none border-t border-border px-0 text-primary hover:bg-transparent">{open ? 'Close notice' : 'Read full notice'}{open ? <ArrowUp className="size-4" /> : <ArrowDown className="size-4" />}</Button>
+            <div className="mt-5">{details}</div>
           </div>
         </article>;
       })}</div>
