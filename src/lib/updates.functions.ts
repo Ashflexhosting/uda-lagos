@@ -17,7 +17,7 @@ export const listPublishedUpdates = createServerFn({ method: "GET" }).handler(as
     } },
   });
   const { data, error } = await client.from("association_updates")
-    .select("id,title,body,kind,event_date,location,image_url,created_at")
+    .select("id,title,body,kind,event_date,location,image_url,is_memorial,created_at")
     .eq("published", true).order("created_at", { ascending: false });
   if (error) throw new Error("News is temporarily unavailable.");
   return recurringVillageMeetings(data, lagosDate(new Date()));

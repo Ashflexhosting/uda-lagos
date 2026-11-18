@@ -1,0 +1,2 @@
+ALTER TABLE public.association_updates ADD COLUMN is_memorial boolean NOT NULL DEFAULT false;
+UPDATE public.association_updates SET is_memorial = true WHERE id = '5dcc5cce-e84b-47ce-9b29-823904565fb4' AND kind = 'event';

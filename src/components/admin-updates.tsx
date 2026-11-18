@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { inputCls } from "@/components/portal-ui";
 
 type Update = Database["public"]["Tables"]["association_updates"]["Row"];
-const empty = { title: "", body: "", kind: "news", event_date: "", location: "", image_url: "", published: false };
+const empty = { title: "", body: "", kind: "news", event_date: "", location: "", image_url: "", published: false, is_memorial: false };
 export function AdminUpdates() {
   const qc = useQueryClient();
   const [editing, setEditing] = useState<string | null>(null);
@@ -22,7 +22,7 @@ export function AdminUpdates() {
   function reset() { setEditing(null); setForm(empty); }
   function edit(item: Update) {
     setEditing(item.id);
-    setForm({ title: item.title, body: item.body, kind: item.kind, event_date: item.event_date ?? "", location: item.location ?? "", image_url: item.image_url ?? "", published: item.published });
+    setForm({ title: item.title, body: item.body, kind: item.kind, event_date: item.event_date ?? "", location: item.location ?? "", image_url: item.image_url ?? "", published: item.published, is_memorial: item.is_memorial });
   }
   async function refresh() {
     await qc.invalidateQueries({ queryKey: ["admin-updates"] });
@@ -34,7 +34,7 @@ export function AdminUpdates() {
     setBusy(true);
     try {
       const dated = form.kind === 'event' || form.kind === 'meeting';
-      const values = { ...form, title: form.title.trim(), body: form.body.trim(), event_date: dated ? form.event_date || null : null, location: dated ? form.location.trim() || null : null, image_url: form.image_url.trim() || null };
+      const values = { ...form, is_memorial: form.kind === 'event' && form.is_memorial, title: form.title.trim(), body: form.body.trim(), event_date: dated ? form.event_date || null : null, location: dated ? form.location.trim() || null : null, image_url: form.image_url.trim() || null };
       const result = editing ? await supabase.from("association_updates").update(values).eq("id", editing).select("id").single() : await supabase.from("association_updates").insert(values).select("id").single();
       if (result.error) throw result.error;
       toast.success(form.published ? "Update published." : "Draft saved.");
@@ -56,6 +56,7 @@ export function AdminUpdates() {
         <label className="block text-sm">Title<input required maxLength={200} className={`${inputCls} mt-1`} value={form.title} onChange={e => setForm({ ...form, title: e.target.value })}/></label>
         <label className="block text-sm">Details<textarea required rows={7} className={`${inputCls} mt-1`} value={form.body} onChange={e => setForm({ ...form, body: e.target.value })}/></label>
         <label className="block text-sm">Logo image URL<input className={`${inputCls} mt-1`} value={form.image_url} onChange={e => setForm({ ...form, image_url: e.target.value })} placeholder="/__l5e/assets-v1/…/logo.jpg"/></label>
+        {form.kind === 'event' && <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={form.is_memorial} onChange={e => setForm({ ...form, is_memorial: e.target.checked })}/>Memorial notice</label>}
         {(form.kind === 'event' || form.kind === 'meeting') && <><label className="block text-sm">Event date<input required type="date" className={`${inputCls} mt-1`} value={form.event_date} onChange={e => setForm({ ...form, event_date: e.target.value })}/></label><label className="block text-sm">Venue<input className={`${inputCls} mt-1`} value={form.location} onChange={e => setForm({ ...form, location: e.target.value })}/></label></>}
         <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={form.published} onChange={e => setForm({ ...form, published: e.target.checked })}/>Published</label>
         <div className="flex gap-3"><Button type="submit" disabled={busy}><Plus className="size-4"/>{busy ? "Saving…" : editing ? "Save changes" : "Save update"}</Button>{editing && <Button type="button" variant="outline" onClick={reset}>Cancel</Button>}</div>

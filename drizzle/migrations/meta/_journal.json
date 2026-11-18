@@ -64,6 +64,13 @@
       "when": 1794116565117,
       "tag": "0008_tighten_newsletter_insert",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1795028948166,
+      "tag": "0009_add_memorial_notice",
+      "breakpoints": true
     }
   ]
 }

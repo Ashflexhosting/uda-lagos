@@ -7,6 +7,7 @@ import { NewsletterSignup } from "@/components/newsletter-signup";
 import { Button } from "@/components/ui/button";
 import { listPublishedUpdates } from "@/lib/updates.functions";
 import { meetingTime } from "@/lib/meetings";
+import { isMemorialPortrait } from "@/lib/memorial";
 import emblem from "@/assets/uda-emblem.png.asset.json";
 import { VillageMeetingYearCalendar } from "@/components/village-meeting-year-calendar";
 
@@ -81,13 +82,16 @@ function News() {
         </>;
         if (largePhoto) return <article key={item.id} className="min-w-0 overflow-hidden rounded-lg border border-border bg-card text-card-foreground md:col-span-2">
           <div className="md:flex">
-            <div className="relative shrink-0 md:w-[42%]">
+            <figure className="flex shrink-0 flex-col md:w-[42%]">
+              <div className="relative flex-1">
               <img src={largePhoto} alt={title} loading="lazy" className="h-auto w-full object-cover md:h-full md:min-h-[28rem]" />
               <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 bg-gradient-to-t from-meetings via-meetings/70 to-transparent px-5 pb-4 pt-12 md:hidden">
                 <p className="flex items-center gap-2 text-xs font-bold uppercase text-gold-bright"><CalendarDays className="size-4" />Event</p>
                 <span className="text-xs text-meetings-foreground/80">{monthYear}</span>
               </div>
-            </div>
+              </div>
+              {isMemorialPortrait(item) && <figcaption className="bg-meetings px-5 py-3 text-center text-sm font-semibold text-meetings-foreground">In loving memory</figcaption>}
+            </figure>
             <div className="min-w-0 flex-1 p-5 sm:p-7">
               <div className="hidden items-center justify-between gap-4 border-b border-border pb-4 md:flex">
                 <p className="flex items-center gap-2 text-xs font-bold uppercase text-primary"><CalendarDays className="size-4" />Event</p>

@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 ## Architecture rules
+- Memorial portrait captions use an explicit notice flag and require an event photo; this avoids funeral wording on ordinary events, news, or meetings.
 - Association news/events use public published-only reads and admin-role write policies; public listing runs through a publishable server client so drafts never reach visitors.
 - Public village meeting dates are calculated by the shared published updates reader using the recurring Lagos-date calendar; original notice dates and text remain unchanged in storage, while homepage and News & Events share the same upcoming dates, times and venues.
 - News & Events opens a single-month village calendar on the current Lagos month with previous/next browsing; the shared date helper and published notices supply dates, logos, times and venues without duplicated static content.

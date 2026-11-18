@@ -21,6 +21,7 @@ export type Database = {
           event_date: string | null
           id: string
           image_url: string | null
+          is_memorial: boolean
           kind: string
           location: string | null
           published: boolean
@@ -32,6 +33,7 @@ export type Database = {
           event_date?: string | null
           id?: string
           image_url?: string | null
+          is_memorial?: boolean
           kind?: string
           location?: string | null
           published?: boolean
@@ -43,6 +45,7 @@ export type Database = {
           event_date?: string | null
           id?: string
           image_url?: string | null
+          is_memorial?: boolean
           kind?: string
           location?: string | null
           published?: boolean
