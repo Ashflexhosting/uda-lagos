@@ -53,6 +53,36 @@ export type Database = {
         }
         Relationships: []
       }
+      birthday_announcements: {
+        Row: {
+          birthday: string
+          created_at: string
+          id: string
+          image_url: string | null
+          message: string
+          name: string
+          published: boolean
+        }
+        Insert: {
+          birthday: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          message?: string
+          name: string
+          published?: boolean
+        }
+        Update: {
+          birthday?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          message?: string
+          name?: string
+          published?: boolean
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string

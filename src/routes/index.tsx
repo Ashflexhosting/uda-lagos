@@ -5,9 +5,10 @@ import pillarWelfare from "@/assets/pillar-welfare.jpg";
 import pillarDevelopment from "@/assets/pillar-development.jpg";
 import pillarFellowship from "@/assets/pillar-fellowship.jpg";
 import { NextVillageMeetings, nextMeetingsQuery } from "@/components/next-village-meetings";
+import { BirthdayAnnouncements, birthdaysQuery } from "@/components/birthday-announcements";
 
 export const Route = createFileRoute("/")({
-  loader: ({ context }) => context.queryClient.ensureQueryData(nextMeetingsQuery),
+  loader: ({ context }) => Promise.all([context.queryClient.ensureQueryData(nextMeetingsQuery), context.queryClient.ensureQueryData(birthdaysQuery)]),
   head: () => ({
     meta: [
       { title: "UDA Lagos — Uzuakoli Development Association, Lagos Branch" },
@@ -73,6 +74,8 @@ function Home() {
       </section>
 
       <NextVillageMeetings />
+
+      <BirthdayAnnouncements />
 
       <section className="bg-secondary">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 md:grid-cols-2">

@@ -71,6 +71,13 @@
       "when": 1795028948166,
       "tag": "0009_add_memorial_notice",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1795195890525,
+      "tag": "0010_create_birthday_announcements",
+      "breakpoints": true
     }
   ]
 }

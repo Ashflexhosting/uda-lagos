@@ -10,3 +10,4 @@
 - [x] Show the deceased's portrait large on the funeral notice on News & Events; verify desktop and phone.
 - [x] Redesign the event notice card as a full-width feature card with a photo panel; verify desktop and phone.
 - [x] Finish the memorial notice option, restore the funeral portrait caption, and verify admin saving and public display.
+- [x] Birthday announcements on the homepage, managed from an admin Birthdays tab.
