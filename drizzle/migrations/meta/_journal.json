@@ -78,6 +78,13 @@
       "when": 1795195890525,
       "tag": "0010_create_birthday_announcements",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1795233780531,
+      "tag": "0011_grant_birthday_announcements_access",
+      "breakpoints": true
     }
   ]
 }
