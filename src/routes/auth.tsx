@@ -8,6 +8,7 @@ import { ArrowLeft, Eye, EyeOff, IdCard, Lock, LogIn, Mail, Phone, Sparkles } fr
 import hero from "@/assets/hero-gathering.jpg";
 import emblem from "@/assets/uda-emblem.png.asset.json";
 import { checkNewEmail, signUpWithPhone } from "@/lib/signup.functions";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -118,9 +119,9 @@ function AuthPage() {
       {/* Form panel */}
       <main className="flex min-h-screen flex-col bg-background">
         <div className="flex items-center justify-between px-6 py-6 sm:px-12">
-          <Link to="/" className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-[11px] uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground">
-            <ArrowLeft className="h-3.5 w-3.5" /> Back to home
-          </Link>
+          <Button asChild className="rounded-full bg-home-link px-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-home-link-foreground hover:bg-home-link/90">
+            <Link to="/"><ArrowLeft className="h-3.5 w-3.5" /> Back to home</Link>
+          </Button>
           <Link to="/" className="flex items-center gap-2 lg:hidden">
             <img src={emblem.url} alt="UDA emblem" width={40} height={40} className="h-10 w-10" />
           </Link>

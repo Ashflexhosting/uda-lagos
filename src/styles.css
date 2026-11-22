@@ -51,6 +51,8 @@
   --color-feature-foreground: var(--feature-foreground);
   --color-meetings: var(--meetings);
   --color-meetings-foreground: var(--meetings-foreground);
+  --color-home-link: var(--home-link);
+  --color-home-link-foreground: var(--home-link-foreground);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
@@ -70,6 +72,8 @@
 }
 
 :root {
+  --home-link: oklch(0.30 0.09 255);
+  --home-link-foreground: oklch(0.98 0.01 255);
   --meetings: oklch(0.29 0.055 165);
   --meetings-foreground: oklch(0.98 0.005 155);
   --radius: 0.625rem;
@@ -111,6 +115,8 @@
 }
 
 .dark {
+  --home-link: oklch(0.30 0.09 255);
+  --home-link-foreground: oklch(0.98 0.01 255);
   --meetings: oklch(0.24 0.04 165);
   --meetings-foreground: oklch(0.98 0.005 155);
   --feature: oklch(0.34 0.14 28);
