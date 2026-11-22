@@ -227,9 +227,9 @@ function AuthPage() {
           </div>
         </div>
 
-        <div className="flex justify-between border-t border-border px-6 py-5 text-[11px] uppercase tracking-[0.2em] text-muted-foreground sm:px-12">
+        <div className="flex flex-wrap items-center justify-between gap-3 bg-home-link px-6 py-5 text-[11px] uppercase tracking-[0.2em] text-home-link-foreground sm:px-12">
           <span>© {new Date().getFullYear()} UDA Lagos</span>
-          <Link to="/contact" className="hover:text-foreground">Contact</Link>
+          <Link to="/contact" className="font-semibold underline-offset-4 hover:underline">Contact</Link>
         </div>
       </main>
     </div>
