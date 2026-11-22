@@ -9,7 +9,7 @@ const nav = [
   { to: "/contact", label: "Contact" },
 ] as const;
 
-export function SiteLayout({ children }: { children: ReactNode }) {
+export function SiteLayout({ children, compactFooter = false }: { children: ReactNode; compactFooter?: boolean }) {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <div className="bg-feature text-feature-foreground">
@@ -69,12 +69,22 @@ export function SiteLayout({ children }: { children: ReactNode }) {
               <li>Spinal Cord Association Center, Ijesha, Lagos (via Lord Chosen)</li>
               <li>Meetings: first Sunday of the month, 3pm at Spinal Cord Association Center, Ijesha</li>
             </ul>
-            <p className="mt-6 text-xs opacity-60">© {2026} UDA Lagos Branch</p>
+            {!compactFooter && <p className="mt-6 text-xs opacity-60">© {2026} UDA Lagos Branch</p>}
           </div>
         </div>
-        <div className="border-t border-primary-foreground/20 py-4 text-center text-xs opacity-70">
-          Powered by <a className="font-semibold underline hover:opacity-90" href="https://ashflexwebdesign.com/" target="_blank" rel="noopener noreferrer">ASHFLEX</a>
-        </div>
+        {compactFooter ? (
+          <div className="bg-home-link text-home-link-foreground">
+            <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-3 gap-y-2 px-4 py-3 text-[10px] uppercase tracking-normal sm:px-6 sm:py-5 sm:text-[11px]">
+              <span>© {new Date().getFullYear()} UDA Lagos</span>
+              <Link to="/contact" className="font-semibold underline-offset-4 hover:underline">Contact</Link>
+              <p className="w-full text-center normal-case tracking-normal">Powered by <a href="https://ashflexwebdesign.com/" target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4 hover:opacity-90">ASHFLEX</a></p>
+            </div>
+          </div>
+        ) : (
+          <div className="border-t border-primary-foreground/20 py-4 text-center text-xs opacity-70">
+            Powered by <a className="font-semibold underline hover:opacity-90" href="https://ashflexwebdesign.com/" target="_blank" rel="noopener noreferrer">ASHFLEX</a>
+          </div>
+        )}
       </footer>
     </div>
   );
