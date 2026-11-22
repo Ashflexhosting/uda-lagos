@@ -227,7 +227,7 @@ function AuthPage() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-3 bg-home-link px-6 py-5 text-[11px] uppercase tracking-[0.2em] text-home-link-foreground sm:px-12">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 bg-home-link px-4 py-3 text-[10px] uppercase tracking-normal text-home-link-foreground sm:px-12 sm:py-5 sm:text-[11px]">
           <span>© {new Date().getFullYear()} UDA Lagos</span>
           <Link to="/contact" className="font-semibold underline-offset-4 hover:underline">Contact</Link>
           <p className="w-full text-center normal-case tracking-normal">Powered by <a href="https://ashflexwebdesign.com/" target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4 hover:opacity-90">ASHFLEX</a></p>
