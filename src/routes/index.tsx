@@ -32,7 +32,7 @@ const pillars = [
 
 function Home() {
   return (
-    <SiteLayout compactFooter>
+    <SiteLayout>
       <section className="relative isolate overflow-hidden">
         <img src={hero} alt="Members of the association gathered in conversation" width={1600} height={912} className="absolute inset-0 -z-10 h-full w-full object-cover" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-foreground/85 via-foreground/60 to-foreground/10" />
