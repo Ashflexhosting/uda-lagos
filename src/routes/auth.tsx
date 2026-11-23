@@ -137,7 +137,7 @@ function AuthPage() {
               {mode === "signup" ? "Join the association" : mode === "forgot" ? "Reset password" : "Cho cho cho Ozu nma!"}
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
-              {mode === "signup" ? "Only for people not yet on the register." : mode === "forgot" ? "We'll email you a link to set a new password." : mode === "member" ? "Already on the register? Use your membership number." : "Sign in to your UDA Lagos account."}
+              {mode === "signup" ? "Only for people not yet on the register." : mode === "forgot" ? "Enter the email you signed up with and we'll send a reset link. Member-number logins: ask an officer to reset it." : mode === "member" ? "Already on the register? Use your membership number." : "Sign in to your UDA Lagos account."}
             </p>
 
             {(mode === "member" || mode === "email" || mode === "phone") && (
@@ -193,9 +193,9 @@ function AuthPage() {
                   </div>
                 </div>
               )}
-              {mode === "email" && (
+              {(mode === "email" || mode === "member") && (
                 <div className="flex justify-end">
-                  <button type="button" onClick={() => setMode("forgot")} className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Forgot?</button>
+                  <button type="button" onClick={() => setMode("forgot")} className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Forgot password?</button>
                 </div>
               )}
               {mode === "phone" && <p className="text-xs text-muted-foreground">Forgot your password? Ask an officer to reset it.</p>}
@@ -227,10 +227,10 @@ function AuthPage() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 bg-home-link px-4 py-3 text-[10px] uppercase tracking-normal text-home-link-foreground sm:px-12 sm:py-5 sm:text-[11px]">
+        <div className="flex items-center justify-between gap-2 whitespace-nowrap bg-home-link px-4 py-3 text-[10px] uppercase tracking-normal text-home-link-foreground sm:px-12 sm:py-5 sm:text-[11px]">
           <span>© {new Date().getFullYear()} UDA Lagos</span>
           <Link to="/contact" className="font-semibold underline-offset-4 hover:underline">Contact</Link>
-          <p className="w-full text-center normal-case tracking-normal">Powered by <a href="https://ashflexwebdesign.com/" target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4 hover:opacity-90">ASHFLEX</a></p>
+          <p className="normal-case tracking-normal">Powered by <a href="https://ashflexwebdesign.com/" target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4 hover:opacity-90">ASHFLEX</a></p>
         </div>
       </main>
     </div>
