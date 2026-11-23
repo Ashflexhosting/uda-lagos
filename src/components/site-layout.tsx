@@ -69,11 +69,18 @@ export function SiteLayout({ children }: { children: ReactNode }) {
               <li>Spinal Cord Association Center, Ijesha, Lagos (via Lord Chosen)</li>
               <li>Meetings: first Sunday of the month, 3pm at Spinal Cord Association Center, Ijesha</li>
             </ul>
-            <p className="mt-6 text-xs opacity-60">© {2026} UDA Lagos Branch</p>
           </div>
         </div>
-        <div className="border-t border-primary-foreground/20 py-4 text-center text-xs opacity-70">
-          Powered by <a className="font-semibold underline hover:opacity-90" href="https://ashflexwebdesign.com/" target="_blank" rel="noopener noreferrer">ASHFLEX</a>
+        <div className="border-t border-primary-foreground/20 px-4 py-3 text-center text-[11px] leading-relaxed opacity-70">
+          <p>© {2026} Uzuakoli Development Association, Lagos Branch</p>
+          <p className="mt-0.5">
+            <a className="hover:underline" href="tel:+2348033208027">+234 803 320 8027</a>
+            <span aria-hidden="true"> · </span>
+            <a className="hover:underline" href="mailto:info@udalagos.com.ng">info@udalagos.com.ng</a>
+          </p>
+          <p className="mt-0.5">
+            Powered by <a className="font-semibold underline hover:opacity-90" href="https://ashflexwebdesign.com/" target="_blank" rel="noopener noreferrer">ASHFLEX</a>
+          </p>
         </div>
       </footer>
     </div>
