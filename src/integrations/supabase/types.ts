@@ -137,6 +137,57 @@ export type Database = {
         }
         Relationships: []
       }
+      member_registrations: {
+        Row: {
+          contact: string
+          created_at: string
+          full_name: string
+          id: string
+          member_id: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          contact?: string
+          created_at?: string
+          full_name: string
+          id?: string
+          member_id?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          user_id: string
+        }
+        Update: {
+          contact?: string
+          created_at?: string
+          full_name?: string
+          id?: string
+          member_id?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "member_registrations_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "member_balances"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "member_registrations_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       members: {
         Row: {
           address: string | null
@@ -377,8 +428,16 @@ export type Database = {
         Returns: boolean
       }
       my_member_id: { Args: never; Returns: string }
+      review_member_registration: {
+        Args: { _approve: boolean; _member_id: string; _request_id: string }
+        Returns: undefined
+      }
       review_proof: {
         Args: { _approve: boolean; _proof_id: string }
+        Returns: undefined
+      }
+      submit_my_registration: {
+        Args: { _full_name: string }
         Returns: undefined
       }
       update_my_contact: {

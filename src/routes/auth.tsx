@@ -7,14 +7,15 @@ import { memberLoginEmail, phoneLoginEmail } from "@/lib/members";
 import { ArrowLeft, Eye, EyeOff, IdCard, Lock, LogIn, Mail, Phone, Sparkles } from "lucide-react";
 import hero from "@/assets/hero-gathering.jpg";
 import emblem from "@/assets/uda-emblem.png.asset.json";
-import { checkNewEmail, signUpWithPhone } from "@/lib/signup.functions";
+import { signUpWithPhone } from "@/lib/signup.functions";
+import { validateRegistrationName } from "@/lib/registration";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
       { title: "Sign in — UDA Lagos Member Portal" },
-      { name: "description", content: "Existing members sign in with their membership number; new members join with email or phone." },
+      { name: "description", content: "Sign in or register with your full name for officer-approved UDA Lagos membership verification." },
       { property: "og:title", content: "Sign in — UDA Lagos Member Portal" },
       { property: "og:description", content: "Sign in to the UDA Lagos member portal." },
       { property: "og:type", content: "website" },
@@ -36,6 +37,7 @@ function AuthPage() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => data.user && navigate({ to: "/portal" }));
@@ -57,15 +59,15 @@ function AuthPage() {
         const { error } = await supabase.auth.signInWithPassword({ email: phoneLoginEmail(phone), password });
         if (error) throw new Error("Phone number or password is incorrect.");
       } else if (mode === "signup") {
+        const name = validateRegistrationName(fullName);
         if (via === "phone") {
-          await signUpWithPhone({ data: { phone, password } });
+          await signUpWithPhone({ data: { phone, password, fullName: name } });
           const { error } = await supabase.auth.signInWithPassword({ email: phoneLoginEmail(phone), password });
           if (error) throw error;
         } else {
-          await checkNewEmail({ data: { email } });
-          const { error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: window.location.origin + "/portal" } });
+          const { data, error } = await supabase.auth.signUp({ email: email.trim(), password, options: { emailRedirectTo: window.location.origin + "/auth", data: { full_name: name } } });
           if (error) throw error;
-          toast.success("Check your email to confirm your account.");
+          toast.success(data.session ? "Your registration is awaiting officer approval." : "Confirm your email; an officer will then verify your membership.");
         }
       } else {
         const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + "/reset-password" });
@@ -131,13 +133,13 @@ function AuthPage() {
           <div className="w-full max-w-md">
             <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.25em] text-primary">
               <span className="h-px w-10 bg-primary" />
-              {mode === "signup" ? "New member" : mode === "forgot" ? "Account recovery" : "Member access"}
+              {mode === "signup" ? "Membership registration" : mode === "forgot" ? "Account recovery" : "Member access"}
             </p>
             <h1 className="mt-3 text-4xl font-bold tracking-tight">
               {mode === "signup" ? "Join the association" : mode === "forgot" ? "Reset password" : "Cho cho cho Ozu nma!"}
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
-              {mode === "signup" ? "Only for people not yet on the register." : mode === "forgot" ? "Enter the email you signed up with and we'll send a reset link. Member-number logins: ask an officer to reset it." : mode === "member" ? "Already on the register? Use your membership number." : "Sign in to your UDA Lagos account."}
+              {mode === "signup" ? "An officer will match your full name to the register before your membership number and account become available." : mode === "forgot" ? "Enter the email you signed up with and we'll send a reset link. Member-number logins: ask an officer to reset it." : mode === "member" ? "Have a member-number login? Use your membership number." : "Sign in to your UDA Lagos account."}
             </p>
 
             {(mode === "member" || mode === "email" || mode === "phone") && (
@@ -153,7 +155,7 @@ function AuthPage() {
             {mode === "signup" && (
               <>
                 <p className="mt-6 rounded-lg border border-border p-3 text-sm text-muted-foreground">
-                  Existing members should{" "}
+                  Already have a member-number login?{" "}
                   <button type="button" onClick={() => setMode("member")} className="font-medium text-primary underline">sign in with their membership number</button>.
                 </p>
                 <div className="mt-4 grid grid-cols-2 rounded-lg bg-muted p-1">
@@ -167,6 +169,7 @@ function AuthPage() {
             )}
 
             <form onSubmit={submit} className="mt-8 space-y-5">
+              {mode === "signup" && <div><label htmlFor="signup-full-name" className={label}>Full name on the register</label><div className="relative"><IdCard className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" /><input id="signup-full-name" required minLength={3} maxLength={150} autoComplete="name" value={fullName} onChange={(event) => setFullName(event.target.value)} placeholder="Your full name" className={input} /></div></div>}
               <div>
                 <label className={label}>{mode === "member" ? "Membership number" : usesPhone ? "Phone number" : "Email address"}</label>
                 <div className="relative">
@@ -217,7 +220,7 @@ function AuthPage() {
                 <button onClick={() => setMode("email")} className="font-semibold text-primary underline underline-offset-4">Back to sign in</button>
               ) : mode !== "signup" ? (
                 <>
-                  <p>Not yet a member?</p>
+                  <p>Need an account?</p>
                   <button onClick={() => setMode("signup")} className="mt-1 inline-flex items-center gap-1.5 border-b border-primary font-semibold text-primary"><Sparkles className="h-3.5 w-3.5" /> Begin registration</button>
                 </>
               ) : (

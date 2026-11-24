@@ -19,3 +19,4 @@
 - Member-number logins are auth users with a synthetic email from `memberLoginEmail()` in src/lib/members.ts, created only by the admin server function `setMemberLogin`.
 - Admin rights are never granted automatically on signup; an admin role row is added deliberately (by an existing admin or a one-off database change).
 - Uploaded files live in private buckets (`photos`, `proofs`) under a `<member id>/` folder; storage policies key on that folder.
+- Signup metadata queues private registration requests, never membership links; name suggestions are officer-only, and a role-checked atomic review RPC links confirmed accounts without replacing existing links. This prevents name-based account takeover and duplicate claims.

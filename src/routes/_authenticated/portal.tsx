@@ -7,6 +7,8 @@ import { useAccount } from "@/hooks/use-account";
 import { BalanceBadge, Row, Shell, Stat, btnCls, inputCls } from "@/components/portal-ui";
 import { BankAccounts } from "@/components/bank-accounts";
 import { naira } from "@/lib/members";
+import { PendingRegistration } from "@/components/pending-registration";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/portal")({
   head: () => ({ meta: [{ title: "My account — UDA Lagos" }, { name: "description", content: "Your dues, payments and balance." }, { property: "og:title", content: "My account — UDA Lagos" }, { property: "og:description", content: "Your membership account and payment history." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
@@ -14,24 +16,20 @@ export const Route = createFileRoute("/_authenticated/portal")({
 });
 
 function Portal() {
-  const { data: acct, isLoading } = useAccount();
+  const { data: acct, isLoading, error, refetch } = useAccount();
   if (isLoading) return <Shell title="My account"><p className="text-muted-foreground">Loading…</p></Shell>;
+  if (error || !acct) return <Shell title="My account"><div role="alert" className="space-y-3"><p className="text-destructive">Unable to load your account.</p><Button variant="outline" onClick={() => void refetch()}>Try again</Button></div></Shell>;
   const m = acct?.member;
-  if (!m) {
+  if (!m?.id || !m.name) {
     return (
       <Shell title="My account">
-        <div className="max-w-xl rounded-lg border border-border bg-card p-6">
-          <h2 className="font-serif text-xl">Your login isn't linked to a member record yet</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Signed in as {acct?.user.email}. Ask an officer to add this email to your member record, or to give you a member-number login.
-          </p>
-        </div>
+        <PendingRegistration userId={acct.user.id} initialName={typeof acct.user.user_metadata["full_name"] === "string" ? acct.user.user_metadata["full_name"] : ""} />
       </Shell>
     );
   }
   return (
-    <Shell title={m.name!} subtitle={`Member no. ${m.id}`}>
-      <MemberAccount memberId={m.id!} />
+    <Shell title={m.name} subtitle={`Member no. ${m.id}`}>
+      <MemberAccount memberId={m.id} />
     </Shell>
   );
 }
