@@ -11,5 +11,5 @@
 - [x] Redesign the event notice card as a full-width feature card with a photo panel; verify desktop and phone.
 - [x] Finish the memorial notice option, restore the funeral portrait caption, and verify admin saving and public display.
 - [x] Birthday announcements on the homepage, managed from an admin Birthdays tab.
-- [ ] Match signup names privately and require officer approval before revealing membership numbers or balances.
-- [ ] Verify signup, officer approval, and member account access end-to-end.
+- [x] Match signup names privately and require officer approval before revealing membership numbers or balances.
+- [x] Verify signup, officer approval, and member account access end-to-end.
