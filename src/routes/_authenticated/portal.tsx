@@ -35,7 +35,7 @@ function Portal() {
 }
 
 function MemberAccount({ memberId }: { memberId: string }) {
-  const { data } = useQuery({
+  const { data, error, refetch } = useQuery({
     queryKey: ["member", memberId],
     queryFn: async () => {
       const [m, p, pr] = await Promise.all([
@@ -44,10 +44,13 @@ function MemberAccount({ memberId }: { memberId: string }) {
         supabase.from("payment_proofs").select("*").eq("member_id", memberId).order("created_at", { ascending: false }),
       ]);
       if (m.error) throw m.error;
+      if (p.error) throw p.error;
+      if (pr.error) throw pr.error;
       return { m: m.data, payments: p.data ?? [], proofs: pr.data ?? [] };
     },
   });
-  if (!data) return <p className="text-muted-foreground">Loading…</p>;
+  if (error) return <div role="alert" className="space-y-3"><p className="text-destructive">Unable to load your balance.</p><Button variant="outline" onClick={() => void refetch()}>Try again</Button></div>;
+  if (!data) return <p className="text-muted-foreground">Loading your balance…</p>;
   const { m, payments, proofs } = data;
   const bal = Number(m.balance);
   return (
