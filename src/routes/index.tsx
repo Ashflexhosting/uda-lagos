@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site-layout";
 import hero from "@/assets/hero-gathering.jpg";
-import pillarWelfare from "@/assets/pillar-welfare.jpg";
-import pillarDevelopment from "@/assets/pillar-development.jpg";
-import pillarFellowship from "@/assets/pillar-fellowship.jpg";
+import pillarWelfare from "@/assets/pillar-welfare.jpg.asset.json";
+import pillarDevelopment from "@/assets/pillar-development.jpg.asset.json";
+import pillarFellowship from "@/assets/pillar-fellowship.jpg.asset.json";
 import { NextVillageMeetings, nextMeetingsQuery } from "@/components/next-village-meetings";
 import { BirthdayAnnouncements, birthdaysQuery } from "@/components/birthday-announcements";
 
@@ -25,9 +25,9 @@ export const Route = createFileRoute("/")({
 });
 
 const pillars = [
-  { t: "Welfare", d: "We stand with members in times of joy and loss — weddings, births, illness and bereavement — through our welfare levy.", img: pillarWelfare, alt: "Association members comforting and supporting a family" },
-  { t: "Development", d: "Our development levy funds projects that improve life in Uzuakoli: roads, schools, water and community halls.", img: pillarDevelopment, alt: "Community members building a water project in Uzuakoli" },
-  { t: "Fellowship", d: "Monthly meetings keep our culture, language and friendships strong for families living in Lagos.", img: pillarFellowship, alt: "Members seated in a circle at a monthly meeting" },
+  { t: "Welfare", d: "We stand with members in times of joy and loss — weddings, births, illness and bereavement — through our welfare levy.", img: pillarWelfare.url, alt: "Nigerian women in matching traditional attire smiling together at a community event" },
+  { t: "Development", d: "Our development levy funds projects that improve life in Uzuakoli: roads, schools, water and community halls.", img: pillarDevelopment.url, alt: "Concrete road construction under way in Lagos State, Nigeria" },
+  { t: "Fellowship", d: "Monthly meetings keep our culture, language and friendships strong for families living in Lagos.", img: pillarFellowship.url, alt: "Traditional drummers in matching wrappers performing at an Igbo New Yam Festival" },
 ];
 
 function Home() {
@@ -71,6 +71,13 @@ function Home() {
             </div>
           ))}
         </div>
+        <p className="mt-6 text-xs text-muted-foreground">
+          Photos:{" "}
+          <a href="https://commons.wikimedia.org/wiki/File:Age_group_women.jpg" target="_blank" rel="noreferrer" className="underline">Essty18</a>,{" "}
+          <a href="https://commons.wikimedia.org/wiki/File:Concrete_road_construction_in_Bogije,_Lagos_Sate,_Nigeria.jpg" target="_blank" rel="noreferrer" className="underline">Ayodele Adeniji</a> and{" "}
+          <a href="https://commons.wikimedia.org/wiki/File:New_Yam_Festival_(Iri_Ji)_01.jpg" target="_blank" rel="noreferrer" className="underline">ABORISADEADETONA</a>{" "}
+          via Wikimedia Commons, CC BY-SA 4.0
+        </p>
       </section>
 
       <NextVillageMeetings />
