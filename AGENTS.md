@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 ## Architecture rules
+- Account AI explanations resolve membership from the authenticated user on every request and send only financial fields to AI Gateway; no client-selected member or account data is trusted, preventing cross-member disclosure even for admins.
 - Memorial portrait captions use an explicit notice flag and require an event photo; this avoids funeral wording on ordinary events, news, or meetings.
 - Association news/events use public published-only reads and admin-role write policies; public listing runs through a publishable server client so drafts never reach visitors.
 - Public village meeting dates are calculated by the shared published updates reader using the recurring Lagos-date calendar; original notice dates and text remain unchanged in storage, while homepage and News & Events share the same upcoming dates, times and venues.

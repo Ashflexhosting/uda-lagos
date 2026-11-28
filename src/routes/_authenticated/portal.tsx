@@ -9,6 +9,7 @@ import { BankAccounts } from "@/components/bank-accounts";
 import { naira } from "@/lib/members";
 import { PendingRegistration } from "@/components/pending-registration";
 import { Button } from "@/components/ui/button";
+import { AccountAssistant } from "@/components/account-assistant";
 
 export const Route = createFileRoute("/_authenticated/portal")({
   head: () => ({ meta: [{ title: "My account — UDA Lagos" }, { name: "description", content: "Your dues, payments and balance." }, { property: "og:title", content: "My account — UDA Lagos" }, { property: "og:description", content: "Your membership account and payment history." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
@@ -62,7 +63,7 @@ function MemberAccount({ memberId }: { memberId: string }) {
       </div>
 
       <div className="grid gap-8 lg:grid-cols-2">
-        <section className="rounded-lg border border-border bg-card p-6">
+        <section className="min-w-0 rounded-lg border border-border bg-card p-6">
           <div className="flex items-center justify-between">
             <h2 className="font-serif text-xl">Statement</h2>
             <button onClick={() => window.print()} className="text-sm underline print:hidden">Download / print</button>
@@ -87,11 +88,12 @@ function MemberAccount({ memberId }: { memberId: string }) {
           </ul>
         </section>
 
-        <div className="space-y-8 print:hidden">
+        <div className="min-w-0 space-y-8 print:hidden">
           <ProofForm memberId={memberId} proofs={proofs} />
           <ContactForm m={m} />
         </div>
       </div>
+      <AccountAssistant key={memberId} />
     </div>
   );
 }
@@ -131,7 +133,7 @@ function ProofForm({ memberId, proofs }: { memberId: string; proofs: ProofRow[] 
         <input required type="number" min={1} value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Amount (₦)" className={inputCls} />
         <input required type="date" value={date} onChange={(e) => setDate(e.target.value)} className={inputCls} />
         <input value={note} onChange={(e) => setNote(e.target.value)} placeholder="Note (e.g. bank, reference)" className={`${inputCls} col-span-2`} />
-        <input required type="file" accept="image/*,application/pdf" onChange={(e) => setFile(e.target.files?.[0] ?? null)} className="col-span-2 text-sm" />
+        <input required type="file" accept="image/*,application/pdf" onChange={(e) => setFile(e.target.files?.[0] ?? null)} className="col-span-2 w-full min-w-0 text-sm" />
         <button disabled={busy} className={`${btnCls} col-span-2`}>{busy ? "Uploading…" : "Submit"}</button>
       </form>
       {proofs.length > 0 && (
@@ -183,8 +185,8 @@ function ContactForm({ m }: { m: ContactRow }) {
       <h2 className="font-serif text-xl">My details</h2>
       <form onSubmit={submit} className="mt-4 space-y-3">
         <div className="flex items-center gap-4">
-          {photoUrl ? <img src={photoUrl} alt="Profile" className="h-16 w-16 rounded-full object-cover" /> : <div className="h-16 w-16 rounded-full bg-muted" />}
-          <input type="file" accept="image/*" onChange={(e) => setPhoto(e.target.files?.[0] ?? null)} className="text-sm" />
+          {photoUrl ? <img src={photoUrl} alt="Profile" className="h-16 w-16 shrink-0 rounded-full object-cover" /> : <div className="h-16 w-16 shrink-0 rounded-full bg-muted" />}
+          <input type="file" accept="image/*" onChange={(e) => setPhoto(e.target.files?.[0] ?? null)} className="w-full min-w-0 text-sm" />
         </div>
         <input type="email" value={f.email} onChange={(e) => setF({ ...f, email: e.target.value })} placeholder="Email" className={inputCls} />
         <input value={f.phone} onChange={(e) => setF({ ...f, phone: e.target.value })} placeholder="Phone number" className={inputCls} />

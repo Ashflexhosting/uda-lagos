@@ -13,3 +13,4 @@
 - [x] Birthday announcements on the homepage, managed from an admin Birthdays tab.
 - [x] Match signup names privately and require officer approval before revealing membership numbers or balances.
 - [x] Verify signup, officer approval, and member account access end-to-end.
+- [x] Add private AI explanations of members' own balance and statement, test privacy, and verify a signed-in question.
